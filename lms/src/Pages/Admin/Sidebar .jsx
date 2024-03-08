@@ -4,6 +4,9 @@ import {
   UserOutlined,
   SettingOutlined,
   FileOutlined,
+  BookOutlined,
+  PieChartOutlined,
+  DatabaseOutlined,
 } from "@ant-design/icons";
 import "./Styles.css";
 const { Sider } = Layout;
@@ -29,16 +32,20 @@ const Sidebar = () => {
         <Menu.Item key="2" style={{ marginTop: 10 }} icon={<FileOutlined />}>
           <a href="/coursecreation">Course Creation</a>
         </Menu.Item>
-        <Menu.Item key="3" style={{ marginTop: 10 }} icon={<UserOutlined />}>
+        <Menu.Item key="3" style={{ marginTop: 10 }} icon={<BookOutlined />}>
           <a href="/lecturemanagement">Lecture Management</a>
         </Menu.Item>
-        <Menu.Item key="4" style={{ marginTop: 10 }} icon={<SettingOutlined />}>
+        <Menu.Item
+          key="4"
+          style={{ marginTop: 10 }}
+          icon={<PieChartOutlined />}
+        >
           <a href="/analytics">Analytics and Insights</a>
         </Menu.Item>
-        <Menu.Item key="5" style={{ marginTop: 10 }} icon={<SettingOutlined />}>
+        <Menu.Item key="5" style={{ marginTop: 10 }} icon={<UserOutlined />}>
           <a href="/studentsmanagement">Student Management</a>
         </Menu.Item>
-        <Menu.Item key="6" icon={<SettingOutlined />}>
+        <Menu.Item key="6" icon={<DatabaseOutlined />}>
           <a href="/coursemanagement">Course Management</a>
         </Menu.Item>
 

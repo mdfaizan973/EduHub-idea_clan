@@ -31,7 +31,7 @@ const SignUpPage = () => {
 
   const onFinish = (values) => {
     console.log("Received values:", { ...values, courses: selectedCourses });
-    // window.location.href = "/";
+    window.location.href = "/admindashboard";
     // Here you can handle the form submission, such as calling an API for registration
   };
 
