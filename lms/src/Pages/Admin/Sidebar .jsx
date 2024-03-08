@@ -15,26 +15,23 @@ const Sidebar = () => {
         style={{ height: "90%", borderRight: 0, marginTop: "20px" }}
       >
         <Menu.Item key="1" style={{ marginTop: 10 }} icon={<HomeOutlined />}>
-          Dashboard
+          <a href="/admindashboard">Dashboard</a>
         </Menu.Item>
         <Menu.Item key="2" style={{ marginTop: 10 }} icon={<UserOutlined />}>
-          Course Creation
+          <a href="/coursecreation">Course Creation</a>
         </Menu.Item>
         <Menu.Item key="3" style={{ marginTop: 10 }} icon={<SettingOutlined />}>
-          Lecture Management
+          <a href="/lecturemanagement">Lecture Management</a>
         </Menu.Item>
         <Menu.Item key="4" style={{ marginTop: 10 }} icon={<SettingOutlined />}>
-          Analytics and Insights
+          <a href="/analytics">Analytics and Insights</a>
         </Menu.Item>
         <Menu.Item key="5" style={{ marginTop: 10 }} icon={<SettingOutlined />}>
-          Student and Course Management
+          <a href="/studentsmanagement">Student Management</a>
         </Menu.Item>
-        {/* <Menu.Item key="6" icon={<SettingOutlined />}>
-          Settings
+        <Menu.Item key="6" icon={<SettingOutlined />}>
+          <a href="/coursemanagement">Course Management</a>
         </Menu.Item>
-        <Menu.Item key="7" icon={<SettingOutlined />}>
-          Settings
-        </Menu.Item> */}
 
         <div className="container">
           <div className="top-section">

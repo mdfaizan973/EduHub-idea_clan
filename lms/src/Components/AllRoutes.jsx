@@ -2,6 +2,11 @@ import Login from "../Pages/Login";
 import { Routes, Route } from "react-router-dom";
 import Register from "../Pages/Register";
 import AdminDashboard from "../Pages/Admin/AdminDashboard";
+import Analytics from "../Pages/Admin/Analytics";
+import CourseCreation from "../Pages/Admin/CourseCreation";
+import CourseManage from "../Pages/Admin/CourseManage";
+import LectureManage from "../Pages/Admin/LectureManage";
+import StudenManage from "../Pages/Admin/StudenManage";
 export default function AllRoutes() {
   return (
     <div>
@@ -9,6 +14,11 @@ export default function AllRoutes() {
         <Route path="/" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/admindashboard" element={<AdminDashboard />}></Route>
+        <Route path="/analytics" element={<Analytics />}></Route>
+        <Route path="/coursecreation" element={<CourseCreation />}></Route>
+        <Route path="/coursemanagement" element={<CourseManage />}></Route>
+        <Route path="/lecturemanagement" element={<LectureManage />}></Route>
+        <Route path="/studentsmanagement" element={<StudenManage />}></Route>
       </Routes>
     </div>
   );
