@@ -1,7 +1,6 @@
 // import React from "react";
 import { Form, Input, Button, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-
 const { Title } = Typography;
 
 const Login = () => {
@@ -58,7 +57,7 @@ const Login = () => {
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             }}
           >
-            Log in
+            Sign In
           </Button>
         </Form.Item>
       </Form>

@@ -31,6 +31,7 @@ const SignUpPage = () => {
 
   const onFinish = (values) => {
     console.log("Received values:", { ...values, courses: selectedCourses });
+    // window.location.href = "/";
     // Here you can handle the form submission, such as calling an API for registration
   };
 
@@ -144,7 +145,6 @@ const SignUpPage = () => {
             onClick={showModal}
             style={{
               width: "100%",
-              backgroundColor: "#52c41a",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
             }}
           >
@@ -156,7 +156,7 @@ const SignUpPage = () => {
           <Button
             type="primary"
             htmlType="submit"
-            style={{ width: "100%", marginTop: 10 }}
+            style={{ width: "100%", marginTop: 10, backgroundColor: "#52c41a" }}
             disabled={isSignUpDisabled}
           >
             Sign Up

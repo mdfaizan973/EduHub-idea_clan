@@ -1,0 +1,37 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: auto;
+}
+
+.logo {
+  height: 32px;
+  margin: 16px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.top-section {
+  margin-bottom: 20px;
+}
+.top-section img {
+  width: 100%;
+}
+
+.bottom-section {
+  width: 100%;
+  text-align: center;
+}
