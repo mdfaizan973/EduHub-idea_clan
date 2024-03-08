@@ -93,7 +93,7 @@ const AppLayout = () => {
             ))}
           </Row>
           <Title level={1} style={{ marginBottom: 20, fontWeight: "bold" }}>
-            Total Lectures
+            Lectures
           </Title>
           {totalLectures.map((ele, i) => (
             <Card key={i} className="horizontal-card" hoverable>
