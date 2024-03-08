@@ -23,16 +23,12 @@ const AppLayout = () => {
     },
     {},
     {},
-    {},
-    {},
-    {},
-    {},
-    {},
+
     {},
     {},
   ];
 
-  const totalLectures = [{}, {}, {}];
+  const totalLectures = [{}, {}];
   return (
     <Layout>
       <Sidebar />
