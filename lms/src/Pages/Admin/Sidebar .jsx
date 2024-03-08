@@ -1,5 +1,10 @@
 import { Layout, Button, Menu } from "antd";
-import { HomeOutlined, UserOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  HomeOutlined,
+  UserOutlined,
+  SettingOutlined,
+  FileOutlined,
+} from "@ant-design/icons";
 import "./Styles.css";
 const { Sider } = Layout;
 
@@ -11,16 +16,15 @@ const Sidebar = () => {
       </div>
       <Menu
         mode="inline"
-        defaultSelectedKeys={["1"]}
         style={{ height: "90%", borderRight: 0, marginTop: "20px" }}
       >
         <Menu.Item key="1" style={{ marginTop: 10 }} icon={<HomeOutlined />}>
           <a href="/admindashboard">Dashboard</a>
         </Menu.Item>
-        <Menu.Item key="2" style={{ marginTop: 10 }} icon={<UserOutlined />}>
+        <Menu.Item key="2" style={{ marginTop: 10 }} icon={<FileOutlined />}>
           <a href="/coursecreation">Course Creation</a>
         </Menu.Item>
-        <Menu.Item key="3" style={{ marginTop: 10 }} icon={<SettingOutlined />}>
+        <Menu.Item key="3" style={{ marginTop: 10 }} icon={<UserOutlined />}>
           <a href="/lecturemanagement">Lecture Management</a>
         </Menu.Item>
         <Menu.Item key="4" style={{ marginTop: 10 }} icon={<SettingOutlined />}>

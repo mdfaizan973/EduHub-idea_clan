@@ -23,7 +23,7 @@ const AppLayout = () => {
             minHeight: 280,
           }}
         >
-          CourseCreation{" "}
+          CourseCreation Page
         </Content>
       </Layout>
     </Layout>

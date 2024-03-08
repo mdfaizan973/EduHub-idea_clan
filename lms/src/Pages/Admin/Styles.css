@@ -1,8 +1,8 @@
 .sidebar {
   position: sticky;
   top: 0;
-  height: 100vh;
-  overflow: auto;
+  /* height: 100vh; */
+  overflow-y: auto;
 }
 
 .logo {
@@ -34,4 +34,89 @@
 .bottom-section {
   width: 100%;
   text-align: center;
+}
+
+.custom-card {
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+.card-cover {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.card-cover img {
+  width: 50%;
+}
+.custom-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+/* horizontal card */
+.horizontal-card {
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+
+.horizontal-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+}
+
+.image-container {
+  width: 100px; /* Adjust image width as needed */
+  height: 100px; /* Adjust image height as needed */
+  margin-right: 20px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.details {
+  flex: 1;
+}
+.details h3 {
+  font-size: 1.5rem;
+}
+.details p {
+  font-size: 1rem;
+}
+.join-button {
+  margin-left: auto;
+}
+.total-students-card {
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+
+.total-students-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-content h2 {
+  font-size: 2rem;
+}
+.count {
+  font-size: 36px;
 }

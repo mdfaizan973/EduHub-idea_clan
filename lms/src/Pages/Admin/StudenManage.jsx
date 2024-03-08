@@ -1,7 +1,5 @@
 // import React from 'react'
 
-
-
 import { Layout } from "antd";
 import Sidebar from "./Sidebar ";
 const { Content } = Layout;
@@ -26,7 +24,7 @@ const AppLayout = () => {
             minHeight: 280,
           }}
         >
-          CourseCreation{" "}
+          StudenManage Page
         </Content>
       </Layout>
     </Layout>
