@@ -10,7 +10,12 @@ const { Sider } = Layout;
 
 const Sidebar = () => {
   return (
-    <Sider className="sidebar" width={250} theme="light">
+    <Sider
+      className="sidebar"
+      width={250}
+      style={{ position: "sticky", top: 0 }}
+      theme="light"
+    >
       <div className="logo">
         <h1>LMS</h1>
       </div>

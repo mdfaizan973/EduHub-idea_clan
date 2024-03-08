@@ -1,8 +1,35 @@
-.sidebar {
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 0 20px;
+  border-radius: 10px;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-section {
+  margin-left: auto;
+}
+
+.user-section a {
+  display: inline-block;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+.user-section a:hover {
+  background-color: #e0e0e0;
+}
+
+/* Sidebar */
+.sidebar-wrapper {
   position: sticky;
   top: 0;
-  /* height: 100vh; */
-  overflow-y: auto;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .logo {
