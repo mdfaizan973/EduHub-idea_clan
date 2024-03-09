@@ -1,4 +1,4 @@
-// import React from 'react'
+import { useState } from "react";
 
 import { Layout } from "antd";
 import Sidebar from "./Sidebar ";
@@ -6,6 +6,8 @@ import { Form, Input, Button, TimePicker } from "antd";
 const { Content } = Layout;
 import NavbarHead from "./NavbarHead";
 import "./Styles.css";
+import { Table, Space } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 export default function LectureManage() {
   return (
     <div>
@@ -135,7 +137,82 @@ const AppLayout = () => {
             </div>
           </div>
         </Content>
+        <h1 style={{ marginTop: "20px", marginBottom: "20px" }}>
+          {" "}
+          Lectures Management
+        </h1>
+
+        <CourseTable />
       </Layout>
     </Layout>
   );
+};
+
+const CourseTable = () => {
+  const [data, setData] = useState([
+    {
+      key: "1",
+      courseName: "Course 1",
+      lectureName: "Lecture 1",
+      startTime: "2024-03-10T10:00:00",
+      endTime: "2024-03-10T12:00:00",
+      instructorName: "Instructor 1",
+      link: "http://example.com/lecture1http://example.com/lecture1",
+    },
+  ]);
+
+  const handleDelete = (key) => {
+    setData(data.filter((item) => item.key !== key));
+  };
+
+  const columns = [
+    {
+      title: "Course Name",
+      dataIndex: "courseName",
+      key: "courseName",
+    },
+    {
+      title: "Lecture Name",
+      dataIndex: "lectureName",
+      key: "lectureName",
+    },
+    {
+      title: "Start Time",
+      dataIndex: "startTime",
+      key: "startTime",
+    },
+    {
+      title: "End Time",
+      dataIndex: "endTime",
+      key: "endTime",
+    },
+    {
+      title: "Instructor Name",
+      dataIndex: "instructorName",
+      key: "instructorName",
+    },
+    {
+      title: "Link",
+      dataIndex: "link",
+      key: "link",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button
+            type="primary"
+            icon={<DeleteOutlined />}
+            onClick={() => handleDelete(record.key)}
+            danger
+          >
+            Delete
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
+  return <Table dataSource={data} columns={columns} />;
 };
