@@ -4,7 +4,7 @@ import { Layout, Card, Row, Typography, Button } from "antd";
 import Sidebar from "./Sidebar ";
 const { Content } = Layout;
 const { Title } = Typography;
-
+import { Link as RouterLink } from "react-router-dom";
 import "./Styles.css";
 import NavbarHead from "./NavbarHead";
 export default function Analytics() {
@@ -17,6 +17,7 @@ export default function Analytics() {
 const AppLayout = () => {
   const [courses, setCourses] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
+  const [lectures, setLectures] = useState([]);
   const getTotalUsers = () => {
     axios
       .get(`http://localhost:3000/api/users/users`)
@@ -40,11 +41,22 @@ const AppLayout = () => {
       });
   };
 
+  const getAllLectures = () => {
+    axios
+      .get(`http://localhost:3000/api/lectures`)
+      .then((res) => {
+        // console.log(res.data);
+        setLectures(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     getCourseData();
     getTotalUsers();
+    getAllLectures();
   }, []);
-  const totalLectures = [{}, {}];
   return (
     <Layout>
       <Sidebar />
@@ -79,7 +91,15 @@ const AppLayout = () => {
                 style={{ width: 190 }}
                 cover={
                   <div className="card-cover">
-                    <img alt={course.name} src={course.imageLink} />
+                    <img
+                      src={course.imageLink}
+                      onError={(e) => {
+                        e.target.onerror = null; // Prevent infinite loop
+                        e.target.src =
+                          "https://cdn3d.iconscout.com/3d/premium/thumb/coding-5306043-4460164.png?f=webp";
+                      }}
+                      alt="course Image"
+                    />
                   </div>
                 }
                 actions={[
@@ -103,7 +123,7 @@ const AppLayout = () => {
           <Title level={1} style={{ marginBottom: 20, fontWeight: "bold" }}>
             Lectures
           </Title>
-          {totalLectures.map((ele, i) => (
+          {lectures.map((ele, i) => (
             <Card key={i} className="horizontal-card" hoverable>
               <div className="card-content">
                 <div className="image-container">
@@ -114,12 +134,16 @@ const AppLayout = () => {
                   />
                 </div>
                 <div className="details">
-                  <h3>React.js</h3>
-                  <p>useState and other hooks</p>
-                  <p>9AM - 10AM</p>
+                  <h3>{ele.lectureName}</h3>
+                  <p>{ele.lectureTitle}</p>
+                  <p>
+                    {ele.startTime} - {ele.endTime}
+                  </p>
                 </div>
                 <div className="join-button">
-                  <Button type="primary">Join</Button>
+                  <RouterLink target="_blank" to={ele.classLink}>
+                    <Button type="primary">Join</Button>
+                  </RouterLink>
                 </div>
               </div>
             </Card>
