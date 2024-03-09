@@ -22,5 +22,14 @@ const getAllCourses = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-module.exports = { createCourse, getAllCourses };
+const deleteCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Course.findByIdAndDelete(id);
+    res.status(200).json({ message: "Course deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+module.exports = { createCourse, getAllCourses, deleteCourse };

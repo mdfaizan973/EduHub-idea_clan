@@ -26,14 +26,25 @@ const CourseTable = () => {
         console.log(err);
       });
   };
+
+  const handleDelete = (id) => {
+    console.log(`Deleting item with id: ${id}`);
+    axios
+      .delete(`http://localhost:3000/api/courses/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        setCourses((prevCourses) =>
+          prevCourses.filter((course) => course._id !== id)
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getCourseData();
   }, []);
-
-  const handleDelete = (key) => {
-    setCourses(courses.filter((item) => item.key !== key));
-  };
-
   const handleEdit = (key) => {
     console.log(`Editing item with key: ${key}`);
   };
@@ -77,20 +88,24 @@ const CourseTable = () => {
     },
     {
       title: "Actions",
-      key: "action",
-      render: () => (
+      key: "actions",
+      render: (text, record) => (
         <Space size="middle">
           <Button
             type="primary"
             icon={<EditOutlined />}
-            onClick={() => handleEdit(1)}
-          ></Button>
+            onClick={() => handleEdit(record._id)}
+          >
+            Edit
+          </Button>
           <Button
             type="primary"
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(2)}
             danger
-          ></Button>
+            icon={<DeleteOutlined />}
+            onClick={() => handleDelete(record._id)}
+          >
+            Delete
+          </Button>
         </Space>
       ),
     },
