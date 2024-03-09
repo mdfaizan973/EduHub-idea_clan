@@ -1,7 +1,17 @@
-import { useState } from "react";
-import { Form, Input, Button, Typography, Modal, Card, Row, Col } from "antd";
+import { useEffect, useState } from "react";
+import {
+  Form,
+  Input,
+  Button,
+  Typography,
+  Modal,
+  Card,
+  Row,
+  Col,
+  message,
+} from "antd";
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
-
+import axios from "axios";
 const { Title } = Typography;
 export default function Register() {
   return (
@@ -15,7 +25,7 @@ const SignUpPage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
-
+  const [courses, setCourses] = useState([]);
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -30,70 +40,46 @@ const SignUpPage = () => {
   };
 
   const onFinish = (values) => {
-    console.log("Received values:", { ...values, courses: selectedCourses });
-    window.location.href = "/admindashboard";
-    // Here you can handle the form submission, such as calling an API for registration
+    // console.log("Received values:", { ...values, courses: selectedCourses });
+    axios
+      .post(`http://localhost:3000/api/users/register`, {
+        ...values,
+        courses: selectedCourses,
+      })
+      .then((res) => {
+        console.log(res);
+        message.success("Registration successful");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const onCardClick = (course) => {
-    if (selectedCourses.includes(course.coursename)) {
-      setSelectedCourses(
-        selectedCourses.filter((c) => c !== course.coursename)
-      );
+    if (selectedCourses.includes(course.name)) {
+      setSelectedCourses(selectedCourses.filter((c) => c !== course.name));
     } else if (selectedCourses.length < 3) {
-      setSelectedCourses([...selectedCourses, course.coursename]);
+      setSelectedCourses([...selectedCourses, course.name]);
     }
   };
 
-  const courses = [
-    {
-      coursename: "JavaScript",
-      courseimg:
-        "https://user-images.githubusercontent.com/106812942/255094159-1381596d-06ae-422b-9321-94903c9c6cb3.png",
-    },
-    {
-      coursename: "React.js",
-      courseimg:
-        "https://user-images.githubusercontent.com/106812942/255093713-fc4acefd-5ae5-469a-ac28-75fff76f758a.png",
-    },
-    {
-      coursename: "Next.js",
-      courseimg:
-        "https://cdn3d.iconscout.com/3d/free/thumb/free-react-js-5562354-4642758.png",
-    },
-    {
-      coursename: "React Native",
-      courseimg:
-        "https://cdn3d.iconscout.com/3d/free/thumb/free-react-5645899-4695757.png?f=webp",
-    },
-    {
-      coursename: "Flutter",
-      courseimg:
-        "https://cdn3d.iconscout.com/3d/free/thumb/free-flutter-9294855-7577998.png",
-    },
-    {
-      coursename: "DSA",
-      courseimg:
-        "https://branditechture.agency/brand-logos/wp-content/uploads/wpdm-cache/data-systems-analysts-inc-dsa-vector-logo-900x0.png",
-    },
-
-    {
-      coursename: "Angular.js",
-      courseimg:
-        "https://user-images.githubusercontent.com/106812942/278868564-8627170b-5eb9-4d18-84e8-4d7096bb4079.png",
-    },
-    {
-      coursename: "Node.js",
-      courseimg:
-        "https://user-images.githubusercontent.com/106812942/255087494-28073997-96d4-48ce-9bb6-c46f9cbe48b9.png",
-    },
-    {
-      coursename: "Express.js",
-      courseimg:
-        "https://ih1.redbubble.net/image.438908244.6144/st,small,507x507-pad,600x600,f8f8f8.u2.jpg",
-    },
-  ];
-
+  const getCourses = () => {
+    axios
+      .get(`http://localhost:3000/api/courses/courses`)
+      .then((res) => {
+        console.log(res);
+        setCourses(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getCourses();
+  }, []);
   return (
     <div
       style={{
@@ -172,28 +158,33 @@ const SignUpPage = () => {
       >
         <Row gutter={[16, 16]}>
           {courses.map((course) => (
-            <Col key={course.coursename} span={8}>
+            <Col key={course.name} span={8}>
               <Card
                 onClick={() => onCardClick(course)}
                 style={{
                   cursor: "pointer",
-                  backgroundColor: selectedCourses.includes(course.coursename)
+                  backgroundColor: selectedCourses.includes(course.name)
                     ? "#52c41a"
                     : "white",
                   textAlign: "center",
                 }}
               >
                 <img
-                  src={course.courseimg}
-                  alt={course.coursename}
+                  src={course.imageLink}
+                  alt={course.name}
                   style={{
                     width: "100%",
                     height: "100px",
                     objectFit: "cover",
                     borderRadius: 5,
                   }}
+                  onError={(e) => {
+                    e.target.onerror = null; // Prevent infinite loop
+                    e.target.src =
+                      "https://cdn3d.iconscout.com/3d/premium/thumb/coding-5306043-4460164.png?f=webp";
+                  }}
                 />
-                <div>{course.coursename}</div>
+                <div>{course.name}</div>
               </Card>
             </Col>
           ))}

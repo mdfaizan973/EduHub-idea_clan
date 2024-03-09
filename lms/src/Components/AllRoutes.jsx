@@ -7,13 +7,18 @@ import CourseCreation from "../Pages/Admin/CourseCreation";
 import CourseManage from "../Pages/Admin/CourseManage";
 import LectureManage from "../Pages/Admin/LectureManage";
 import StudenManage from "../Pages/Admin/StudenManage";
+import ProtectedRoutes from "./ProtectedRoutes";
+
 export default function AllRoutes() {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
-        <Route path="/admindashboard" element={<AdminDashboard />}></Route>
+        <Route
+          path="/admindashboard"
+          element={<ProtectedRoutes component={AdminDashboard} />}
+        ></Route>
         <Route path="/analytics" element={<Analytics />}></Route>
         <Route path="/coursecreation" element={<CourseCreation />}></Route>
         <Route path="/coursemanagement" element={<CourseManage />}></Route>

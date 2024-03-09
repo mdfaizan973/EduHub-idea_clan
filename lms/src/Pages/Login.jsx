@@ -2,11 +2,11 @@
 import { Form, Input, Button, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 const { Title } = Typography;
-
+// import axios from "axios";
 const Login = () => {
   const onFinish = (values) => {
     console.log("Received values:", values);
-    // Here you can handle the form submission, such as calling an API for authentication
+    sessionStorage.setItem("user_loged_in", "true");
   };
 
   return (
