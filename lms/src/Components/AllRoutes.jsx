@@ -9,7 +9,7 @@ import LectureManage from "../Pages/Admin/LectureManage";
 import StudenManage from "../Pages/Admin/StudenManage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import ProtectedRoutesAdmin from "./ProtectedRoutesAdmin";
-import Students from "../Pages/users/Students";
+import StudentsDashboard from "../Pages/users/Students";
 export default function AllRoutes() {
   return (
     <div>
@@ -29,7 +29,7 @@ export default function AllRoutes() {
         {/* Students Routes */}
         <Route
           path="/students"
-          element={<ProtectedRoutes component={Students} />}
+          element={<ProtectedRoutes component={StudentsDashboard} />}
         ></Route>
       </Routes>
     </div>
