@@ -1,12 +1,12 @@
 // import React from 'react'
 
-import { Layout, Card, Row, Typography, Button, Avatar } from "antd";
+import { Layout, Card, Row, Typography, Button } from "antd";
 import Sidebar from "./Sidebar ";
 const { Content } = Layout;
 const { Title } = Typography;
-const { Header } = Layout;
-import { UserOutlined } from "@ant-design/icons";
+
 import "./Styles.css";
+import NavbarHead from "./NavbarHead";
 export default function Analytics() {
   return (
     <div>
@@ -42,12 +42,7 @@ const AppLayout = () => {
           }}
         >
           {/* Navbar */}
-          <Header className="navbar">
-            <div className="logo" />
-            <div className="user-section">
-              <Avatar size="medium" icon={<UserOutlined />} />
-            </div>
-          </Header>
+          <NavbarHead />
           {/* Content */}
           <Card className="total-students-card">
             <div className="card-content">

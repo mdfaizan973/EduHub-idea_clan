@@ -147,3 +147,32 @@
 .count {
   font-size: 36px;
 }
+/* courseCreation */
+.form-container {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.image-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.submit-button {
+  background-color: #52c41a;
+  border-color: #52c41a;
+  width: 100%;
+}
+.image-container {
+  position: absolute;
+  top: 15%;
+  right: 20px;
+  width: 200px;
+  height: 200px;
+}
