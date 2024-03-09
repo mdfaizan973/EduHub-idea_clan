@@ -1,11 +1,14 @@
 import { Layout, Button } from "antd";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
-
+import { Link as RouterLink } from "react-router-dom";
 const { Header } = Layout;
 
 const Navbar = () => {
   const handleLogout = () => {
-    // Handle logout logic
+    sessionStorage.removeItem("user_logged_in");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 800);
   };
 
   return (
@@ -25,23 +28,28 @@ const Navbar = () => {
           alignItems: "center",
         }}
       >
-        <div
-          style={{
-            marginRight: 20,
-            color: "black",
-            fontSize: 25,
-            fontWeight: "bold",
-          }}
-        >
-          LMS
-        </div>
+        <RouterLink to="/students">
+          {" "}
+          <div
+            style={{
+              marginRight: 20,
+              color: "black",
+              fontSize: 25,
+              fontWeight: "bold",
+            }}
+          >
+            LMS
+          </div>
+        </RouterLink>
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Button
-          type="text"
-          icon={<UserOutlined />}
-          style={{ marginRight: 20 }}
-        />
+        <RouterLink to="/student-profile">
+          <Button
+            type="text"
+            icon={<UserOutlined />}
+            style={{ marginRight: 20 }}
+          />
+        </RouterLink>
         <Button type="text" icon={<LogoutOutlined />} onClick={handleLogout} />
       </div>
     </Header>

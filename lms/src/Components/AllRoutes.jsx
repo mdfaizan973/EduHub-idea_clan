@@ -10,6 +10,7 @@ import StudenManage from "../Pages/Admin/StudenManage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import ProtectedRoutesAdmin from "./ProtectedRoutesAdmin";
 import StudentsDashboard from "../Pages/users/Students";
+import StudentsProfile from "../Pages/users/StudentsProfile";
 export default function AllRoutes() {
   return (
     <div>
@@ -30,6 +31,10 @@ export default function AllRoutes() {
         <Route
           path="/students"
           element={<ProtectedRoutes component={StudentsDashboard} />}
+        ></Route>
+        <Route
+          path="/student-profile"
+          element={<ProtectedRoutes component={StudentsProfile} />}
         ></Route>
       </Routes>
     </div>

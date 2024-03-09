@@ -7,9 +7,7 @@ import { useEffect, useState } from "react";
 const { Search } = Input;
 const { Option } = Select;
 export default function StudentsDashboard() {
-  // const lectures = [{}, {}];
   const user_id = sessionStorage.getItem("lmscurrentstudent");
-  // const [studentCourse, setStudentCourse] = useState([]);
   const [userlectures, setUserLectures] = useState([]);
 
   const getUsersCourses = () => {
@@ -19,7 +17,6 @@ export default function StudentsDashboard() {
         const users = res.data;
         const user = users.find((user) => user._id === user_id);
         if (user) {
-          // setStudentCourse(user.courses);
           axios
             .get(`http://localhost:3000/api/lectures`)
             .then((res) => {
@@ -39,7 +36,6 @@ export default function StudentsDashboard() {
         console.log(err);
       });
   };
-  // console.log("studentCourse", studentCourse);
 
   // Funcationalaties
   const handleSearch = (value) => {
@@ -65,7 +61,7 @@ export default function StudentsDashboard() {
           borderRadius: "10px",
           backgroundColor: "#fff",
           padding: "10px",
-          height: "90vh",
+          height: "100%",
         }}
       >
         <div
@@ -105,36 +101,48 @@ export default function StudentsDashboard() {
             <Option value="option3">Option 3</Option>
           </Select>
         </div>
-        {userlectures.map((ele, i) => (
-          <Card key={i} className="horizontal-card" hoverable>
-            <div className="card-content">
-              <div className="image-container">
-                <img
-                  className="image_container_image"
-                  alt="image"
-                  src="https://students.masaischool.com/static/media/openBookImage.95b8e8b4378306339c056f175c2f9b66.svg"
-                />
+
+        {userlectures.length > 0 ? (
+          userlectures.map((ele, i) => (
+            <Card key={i} className="horizontal-card" hoverable>
+              <div className="card-content">
+                <div className="image-container">
+                  <img
+                    className="image_container_image"
+                    alt="image"
+                    src="https://students.masaischool.com/static/media/openBookImage.95b8e8b4378306339c056f175c2f9b66.svg"
+                  />
+                </div>
+                <div className="details">
+                  <h3>
+                    {ele.lectureTitle}{" "}
+                    <Tag color="volcano">{ele.instructorName}</Tag>
+                  </h3>
+                  <Tag style={{ fontSize: "15px" }} color="cyan">
+                    {ele.lectureName}
+                  </Tag>
+                  <Tag>
+                    {ele.startTime} - {ele.endTime}
+                  </Tag>
+                </div>
+                <div className="join-button">
+                  <RouterLink target="_blank" to={ele.classLink}>
+                    <Button type="primary">Join</Button>
+                  </RouterLink>
+                </div>
               </div>
-              <div className="details">
-                <h3>
-                  {ele.lectureTitle}{" "}
-                  <Tag color="volcano">{ele.instructorName}</Tag>
-                </h3>
-                <Tag style={{ fontSize: "15px" }} color="cyan">
-                  {ele.lectureName}
-                </Tag>
-                <Tag>
-                  {ele.startTime} - {ele.endTime}
-                </Tag>
-              </div>
-              <div className="join-button">
-                <RouterLink target="_blank" to={ele.classLink}>
-                  <Button type="primary">Join</Button>
-                </RouterLink>
-              </div>
-            </div>
-          </Card>
-        ))}
+            </Card>
+          ))
+        ) : (
+          <div style={{ textAlign: "center", padding: "20px", color: "#999" }}>
+            <img
+              src="https://i.pinimg.com/564x/8b/7e/65/8b7e65332e15477927f2650c480b2e08.jpg"
+              alt="No lectures today"
+              style={{ maxWidth: "200px", marginBottom: "10px" }}
+            />
+            <div style={{ fontSize: "30px" }}>No lectures today</div>
+          </div>
+        )}
       </div>
     </div>
   );
