@@ -1,8 +1,8 @@
 // import React from 'react'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Table, Button, Space } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-
+import axios from "axios";
 export default function CourseManage() {
   return (
     <div>
@@ -13,19 +13,25 @@ export default function CourseManage() {
 }
 
 const CourseTable = () => {
-  const [data, setData] = useState([
-    {
-      key: "1",
-      image:
-        "https://i.ibb.co/CtsLDyq/cc8882905c39c034c16a86ee73c402f6-removebg-preview.png",
-      name: "Course Name",
-      description: "Course Description",
-      link: "http://example.com",
-    },
-  ]);
+  const [courses, setCourses] = useState([]);
+
+  const getCourseData = () => {
+    axios
+      .get(`http://localhost:3000/api/courses/courses`)
+      .then((res) => {
+        console.log(res.data);
+        setCourses(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getCourseData();
+  }, []);
 
   const handleDelete = (key) => {
-    setData(data.filter((item) => item.key !== key));
+    setCourses(courses.filter((item) => item.key !== key));
   };
 
   const handleEdit = (key) => {
@@ -34,11 +40,11 @@ const CourseTable = () => {
   const columns = [
     {
       title: "Image",
-      dataIndex: "image",
-      key: "image",
-      render: (image) => (
+      dataIndex: "imageLink",
+      key: "imageLink",
+      render: (imageLink) => (
         <img
-          src={image}
+          src={imageLink}
           alt="Course"
           style={{ width: 50, height: 50, borderRadius: "50%" }}
         />
@@ -56,9 +62,13 @@ const CourseTable = () => {
     },
     {
       title: "Docs",
-      dataIndex: "docs",
-      key: "docs",
-      render: (Docs) => <a href={Docs}>Docs</a>,
+      dataIndex: "docsLink",
+      key: "docsLink",
+      render: (docsLink) => (
+        <a target="_blank" href={docsLink}>
+          Docs
+        </a>
+      ),
     },
     {
       title: "Action",
@@ -85,5 +95,5 @@ const CourseTable = () => {
     },
   ];
 
-  return <Table dataSource={data} columns={columns} />;
+  return <Table dataSource={courses} columns={columns} />;
 };
