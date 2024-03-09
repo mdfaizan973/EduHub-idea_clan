@@ -18,6 +18,15 @@ export default function LectureManage() {
 const AppLayout = () => {
   const onFinish = (values) => {
     console.log("Received values:", values);
+    axios
+      .post(`http://localhost:3000/api/lectures`, values)
+      .then((res) => {
+        console.log(res.data);
+        message.success("Lecture has been successfully created");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -66,10 +75,10 @@ const AppLayout = () => {
                 <Form.Item
                   name="lectureName"
                   rules={[
-                    { required: true, message: "Please input lecture name!" },
+                    { required: true, message: "Please input course name!" },
                   ]}
                 >
-                  <Input placeholder="Lecture Name" />
+                  <Input placeholder="Course Name" />
                 </Form.Item>
                 <Form.Item
                   name="lectureTitle"
@@ -155,7 +164,7 @@ const CourseTable = () => {
     axios
       .get(`http://localhost:3000/api/lectures`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setLectures(res.data);
       })
       .catch((err) => {
@@ -183,14 +192,14 @@ const CourseTable = () => {
 
   const columns = [
     {
-      title: "Lecture Name",
-      dataIndex: "lectureTitle",
-      key: "lectureTitle",
+      title: "Course Name",
+      dataIndex: "lectureName",
+      key: "lectureName",
     },
     {
       title: "Lecture Name",
-      dataIndex: "lectureName",
-      key: "lectureName",
+      dataIndex: "lectureTitle",
+      key: "lectureTitle",
     },
     {
       title: "Start Time",
