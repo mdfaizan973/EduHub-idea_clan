@@ -46,7 +46,7 @@ const Sidebar = () => {
           <a href="/studentsmanagement">Student Management</a>
         </Menu.Item>
         <Menu.Item key="6" icon={<DatabaseOutlined />}>
-          <a href="/coursemanagement">Course Management</a>
+          <a href="/coursecreation">Course Management</a>
         </Menu.Item>
 
         <div className="container">

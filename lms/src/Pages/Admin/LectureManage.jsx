@@ -40,7 +40,7 @@ const AppLayout = () => {
               flexDirection: "column",
             }}
           >
-            <div className="image-container">
+            <div className="image-container_topright">
               <img
                 src="https://i.ibb.co/CtsLDyq/cc8882905c39c034c16a86ee73c402f6-removebg-preview.png"
                 alt="Course"

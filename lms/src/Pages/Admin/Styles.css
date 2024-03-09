@@ -105,7 +105,7 @@
   margin-right: 20px;
 }
 
-.image-container img {
+.image-container .image_container_image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -157,26 +157,41 @@
   background-color: #fff;
 }
 
-.image-container {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
-}
-
 .submit-button {
   background-color: #52c41a;
   border-color: #52c41a;
   width: 100%;
 }
-.image-container {
+.image-container_topright {
   position: absolute;
   top: 15%;
-  right: 20px;
+  right: 5%;
   width: 200px;
   height: 200px;
+}
+.image-container_topright img {
+  width: 100%;
 }
 /* lecture management */
 .lecture_form {
   background-color: white;
+}
+/* studen manageemtn */
+.student_avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.studentmanagement-table {
+  padding: 10px;
+  background-color: #fff;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+.studentmanagement-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.studentmanagement-table .ant-table-tbody > tr:last-child > td {
+  border-bottom: none;
 }

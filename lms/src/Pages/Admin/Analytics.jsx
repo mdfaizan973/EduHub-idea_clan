@@ -95,6 +95,7 @@ const AppLayout = () => {
               <div className="card-content">
                 <div className="image-container">
                   <img
+                    className="image_container_image"
                     alt={name}
                     src="https://students.masaischool.com/static/media/openBookImage.95b8e8b4378306339c056f175c2f9b66.svg"
                   />
