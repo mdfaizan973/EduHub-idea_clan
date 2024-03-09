@@ -5,38 +5,6 @@ const { Title } = Typography;
 import axios from "axios";
 const Login = () => {
   const onFinish = async (values) => {
-    // try {
-    //   const usersresponse = await axios.get(
-    //     "http://localhost:3000/api/users/users"
-    //   );
-    //   const users = usersresponse.data;
-    //   const user = users.find(
-    //     (user) =>
-    //       user.email === values.email && user.password === values.password
-    //   );
-
-    //   const adminsresponse = await axios.get(
-    //     "http://localhost:3000/api/admins"
-    //   );
-    //   const admins = adminsresponse.data;
-    //   const admin = admins.find(
-    //     (admin) =>
-    //       admin.email === values.email && admin.password === values.password
-    //   );
-
-    //   if (user) {
-    //     message.success("Login Successful!");
-    //     sessionStorage.setItem("user_loged_in", "true");
-    //     setTimeout(() => {
-    //       window.location.href = "/admindashboard";
-    //     }, 1000);
-    //   } else {
-    //     message.error("Login Failed! Please try again!");
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   alert("An error occurred. Please try again.");
-    // }
     try {
       const usersResponse = await axios.get(
         "http://localhost:3000/api/users/users"
@@ -51,10 +19,9 @@ const Login = () => {
         message.success("Login Successful!");
         sessionStorage.setItem("user_logged_in", "true");
         setTimeout(() => {
-          window.location.href = "/admindashboard";
+          window.location.href = "/students";
         }, 1000);
       } else {
-        console.log(values);
         try {
           const adminsResponse = await axios.get(
             "http://localhost:3000/api/admins"
@@ -69,8 +36,10 @@ const Login = () => {
 
           if (admin) {
             message.success("Admin Login Successful!");
+            sessionStorage.setItem("admin_logged_in", "true");
+
             setTimeout(() => {
-              window.location.href = "https://www.google.com";
+              window.location.href = "/admindashboard";
             }, 1000);
           } else {
             message.error("Login Failed! Please try again.");

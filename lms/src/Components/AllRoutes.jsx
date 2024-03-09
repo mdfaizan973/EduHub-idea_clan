@@ -8,7 +8,8 @@ import CourseManage from "../Pages/Admin/CourseManage";
 import LectureManage from "../Pages/Admin/LectureManage";
 import StudenManage from "../Pages/Admin/StudenManage";
 import ProtectedRoutes from "./ProtectedRoutes";
-
+import ProtectedRoutesAdmin from "./ProtectedRoutesAdmin";
+import Students from "../Pages/users/Students";
 export default function AllRoutes() {
   return (
     <div>
@@ -17,13 +18,19 @@ export default function AllRoutes() {
         <Route path="/register" element={<Register />}></Route>
         <Route
           path="/admindashboard"
-          element={<ProtectedRoutes component={AdminDashboard} />}
+          element={<ProtectedRoutesAdmin component={AdminDashboard} />}
         ></Route>
         <Route path="/analytics" element={<Analytics />}></Route>
         <Route path="/coursecreation" element={<CourseCreation />}></Route>
         <Route path="/coursemanagement" element={<CourseManage />}></Route>
         <Route path="/lecturemanagement" element={<LectureManage />}></Route>
         <Route path="/studentsmanagement" element={<StudenManage />}></Route>
+
+        {/* Students Routes */}
+        <Route
+          path="/students"
+          element={<ProtectedRoutes component={Students} />}
+        ></Route>
       </Routes>
     </div>
   );
