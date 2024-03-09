@@ -1,5 +1,5 @@
-// import React from 'react'
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Layout, Card, Row, Typography, Button } from "antd";
 import Sidebar from "./Sidebar ";
 const { Content } = Layout;
@@ -15,19 +15,35 @@ export default function Analytics() {
   );
 }
 const AppLayout = () => {
-  const array = [
-    {
-      image: "",
-      name: "",
-      disk: "",
-      docsLink: "",
-    },
-    {},
-    {},
-    {},
-    {},
-  ];
+  const [courses, setCourses] = useState([]);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const getTotalUsers = () => {
+    axios
+      .get(`http://localhost:3000/api/users/users`)
+      .then((res) => {
+        console.log(res.data);
+        setTotalUsers(res.data.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getCourseData = () => {
+    axios
+      .get(`http://localhost:3000/api/courses/courses`)
+      .then((res) => {
+        // console.log(res.data);
+        setCourses(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  useEffect(() => {
+    getCourseData();
+    getTotalUsers();
+  }, []);
   const totalLectures = [{}, {}];
   return (
     <Layout>
@@ -47,7 +63,7 @@ const AppLayout = () => {
           <Card className="total-students-card">
             <div className="card-content">
               <h2>Total Students</h2>
-              <h1>999</h1>
+              <h1>{totalUsers}</h1>
             </div>
           </Card>
           {/* all courses */}
@@ -55,7 +71,7 @@ const AppLayout = () => {
             All Courses
           </Title>
           <Row gutter={[16, 16]}>
-            {array.map((product, i) => (
+            {courses.map((course, i) => (
               <Card
                 key={i}
                 className="custom-card"
@@ -63,16 +79,13 @@ const AppLayout = () => {
                 style={{ width: 190 }}
                 cover={
                   <div className="card-cover">
-                    <img
-                      alt={product.name}
-                      src="https://user-images.githubusercontent.com/106812942/255094159-1381596d-06ae-422b-9321-94903c9c6cb3.png"
-                    />
+                    <img alt={course.name} src={course.imageLink} />
                   </div>
                 }
                 actions={[
                   <a
                     key={i}
-                    href="https://mdfaizan973.github.io/"
+                    href={course.docsLink}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -81,8 +94,8 @@ const AppLayout = () => {
                 ]}
               >
                 <div className="custom-card-content">
-                  <h3>Javascript</h3>
-                  <p>Learn javascript with us.</p>
+                  <h3>{course.name}</h3>
+                  {/* <p>{course.description}</p> */}
                 </div>
               </Card>
             ))}
