@@ -2,6 +2,7 @@
 const express = require("express");
 const userRoutes = require("./routes/userRoutes");
 const courseRoutes = require("./routes/courseRoutes");
+const lectureRoutes = require("./routes/lectureRoutes");
 const cors = require("cors"); // Import the cors middleware
 const connectDB = require("./config/db");
 
@@ -13,5 +14,5 @@ app.use(cors()); // Use the cors middleware to allow all origins
 app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/courses", courseRoutes);
-
+app.use("/api/lectures", lectureRoutes);
 module.exports = app;
