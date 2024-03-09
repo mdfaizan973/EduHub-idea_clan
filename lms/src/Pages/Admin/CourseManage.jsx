@@ -19,7 +19,7 @@ const CourseTable = () => {
     axios
       .get(`http://localhost:3000/api/courses/courses`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setCourses(res.data);
       })
       .catch((err) => {
@@ -44,9 +44,14 @@ const CourseTable = () => {
       key: "imageLink",
       render: (imageLink) => (
         <img
-          src={imageLink}
-          alt="Course"
           style={{ width: 50, height: 50, borderRadius: "50%" }}
+          src={imageLink}
+          onError={(e) => {
+            e.target.onerror = null; // Prevent infinite loop
+            e.target.src =
+              "https://cdn3d.iconscout.com/3d/premium/thumb/coding-5306043-4460164.png?f=webp";
+          }}
+          alt="course Image"
         />
       ),
     },
@@ -71,7 +76,7 @@ const CourseTable = () => {
       ),
     },
     {
-      title: "Action",
+      title: "Actions",
       key: "action",
       render: () => (
         <Space size="middle">
@@ -79,17 +84,13 @@ const CourseTable = () => {
             type="primary"
             icon={<EditOutlined />}
             onClick={() => handleEdit(1)}
-          >
-            Edit
-          </Button>
+          ></Button>
           <Button
             type="primary"
             icon={<DeleteOutlined />}
             onClick={() => handleDelete(2)}
             danger
-          >
-            Delete
-          </Button>
+          ></Button>
         </Space>
       ),
     },

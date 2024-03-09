@@ -7,6 +7,7 @@ import "./Styles.css";
 import { useState } from "react";
 import NavbarHead from "./NavbarHead";
 import CourseManage from "./CourseManage";
+import axios from "axios";
 export default function CourseCreation() {
   return (
     <div>
@@ -16,11 +17,6 @@ export default function CourseCreation() {
 }
 const AppLayout = () => {
   const [imageUrl, setImageUrl] = useState(null);
-
-  const onFinish = (values) => {
-    console.log("Received values:", values);
-    message.success("Form submitted successfully!");
-  };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -32,7 +28,18 @@ const AppLayout = () => {
       reader.readAsDataURL(file);
     }
   };
-
+  const onFinish = (values) => {
+    console.log("Received values:", values);
+    axios
+      .post(`http://localhost:3000/api/courses/courses`, values)
+      .then((res) => {
+        console.log(res);
+        message.success("Form submitted successfully!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <Layout>
       <Sidebar />
@@ -78,7 +85,7 @@ const AppLayout = () => {
                 }}
               >
                 <Form.Item
-                  name="courseImage"
+                  name="imageLink"
                   rules={[
                     { required: true, message: "Please upload course image!" },
                   ]}
@@ -97,7 +104,7 @@ const AppLayout = () => {
                   />
                 )}
                 <Form.Item
-                  name="courseName"
+                  name="name"
                   rules={[
                     { required: true, message: "Please input course name!" },
                   ]}
