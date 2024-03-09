@@ -1,6 +1,6 @@
 // import React from 'react'
 import { useEffect, useState } from "react";
-import { Table, Button, Space } from "antd";
+import { Table, Button, Space, message } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 export default function CourseManage() {
@@ -28,11 +28,13 @@ const CourseTable = () => {
   };
 
   const handleDelete = (id) => {
-    console.log(`Deleting item with id: ${id}`);
+    // console.log(`Deleting item with id: ${id}`);
     axios
       .delete(`http://localhost:3000/api/courses/${id}`)
       .then((res) => {
         console.log(res.data);
+        message.error(`Course is Removed `);
+
         setCourses((prevCourses) =>
           prevCourses.filter((course) => course._id !== id)
         );

@@ -1,6 +1,6 @@
-import { useState } from "react";
-
-import { Layout } from "antd";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Layout, message } from "antd";
 import Sidebar from "./Sidebar ";
 import { Form, Input, Button, TimePicker } from "antd";
 const { Content } = Layout;
@@ -149,27 +149,43 @@ const AppLayout = () => {
 };
 
 const CourseTable = () => {
-  const [data, setData] = useState([
-    {
-      key: "1",
-      courseName: "Course 1",
-      lectureName: "Lecture 1",
-      startTime: "2024-03-10T10:00:00",
-      endTime: "2024-03-10T12:00:00",
-      instructorName: "Instructor 1",
-      link: "http://example.com/lecture1http://example.com/lecture1",
-    },
-  ]);
+  const [lectures, setLectures] = useState([]);
 
-  const handleDelete = (key) => {
-    setData(data.filter((item) => item.key !== key));
+  const getAllLectures = () => {
+    axios
+      .get(`http://localhost:3000/api/lectures`)
+      .then((res) => {
+        console.log(res.data);
+        setLectures(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:3000/api/lectures/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        message.error(`Lecture is Removed `);
+
+        setLectures((prevLecture) =>
+          prevLecture.filter((lecture) => lecture._id !== id)
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getAllLectures();
+  }, []);
 
   const columns = [
     {
-      title: "Course Name",
-      dataIndex: "courseName",
-      key: "courseName",
+      title: "Lecture Name",
+      dataIndex: "lectureTitle",
+      key: "lectureTitle",
     },
     {
       title: "Lecture Name",
@@ -192,9 +208,14 @@ const CourseTable = () => {
       key: "instructorName",
     },
     {
-      title: "Link",
-      dataIndex: "link",
-      key: "link",
+      title: "Class Link",
+      dataIndex: "classLink",
+      key: "classLink",
+      render: (text) => (
+        <a href={text} target="_blank" rel="noopener noreferrer">
+          <Button>Class Link</Button>
+        </a>
+      ),
     },
     {
       title: "Action",
@@ -204,15 +225,13 @@ const CourseTable = () => {
           <Button
             type="primary"
             icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.key)}
+            onClick={() => handleDelete(record._id)}
             danger
-          >
-            Delete
-          </Button>
+          ></Button>
         </Space>
       ),
     },
   ];
 
-  return <Table dataSource={data} columns={columns} />;
+  return <Table dataSource={lectures} columns={columns} />;
 };
