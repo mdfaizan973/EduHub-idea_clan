@@ -1,14 +1,19 @@
 import Navbar from "./Navbar";
-import { Card, Avatar, Tag } from "antd";
-import { Form, Input, Button, Typography } from "antd";
+import {
+  Card,
+  Avatar,
+  Tag,
+  message,
+  Form,
+  Input,
+  Button,
+  Typography,
+} from "antd";
 const { Title } = Typography;
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
-// import "antd/dist/antd.css";
 import "./Styles.css";
-// import { EditOutlined } from "@ant-design/icons";
 export default function StudentsProfile() {
   const user_id = sessionStorage.getItem("lmscurrentstudent");
   const [getUser, setGetuser] = useState({});
@@ -29,10 +34,18 @@ export default function StudentsProfile() {
         console.error("Error fetching user data:", err);
       });
   }, [user_id]);
-  console.log(getUser);
 
   const handleUpdate = (value) => {
-    console.log("Updated data:", value);
+    axios
+      .put(`http://localhost:3000/api/users/${user_id}`, value)
+      .then((res) => {
+        // console.log(res);
+        message.success("Your Profile has been Updated successfully 🎊🎊");
+        setGetuser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div>
