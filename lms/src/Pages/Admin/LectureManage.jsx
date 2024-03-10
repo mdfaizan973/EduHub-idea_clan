@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Layout, message } from "antd";
 import Sidebar from "./Sidebar ";
-import { Form, Input, Button, TimePicker } from "antd";
+import { Form, Input, Button, TimePicker, Select } from "antd";
 const { Content } = Layout;
 import NavbarHead from "./NavbarHead";
 import "./Styles.css";
 import { Table, Space } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+const { Search } = Input;
+const { Option } = Select;
 export default function LectureManage() {
   return (
     <div>
@@ -150,7 +152,6 @@ const AppLayout = () => {
           {" "}
           Lectures Management
         </h1>
-
         <CourseTable />
       </Layout>
     </Layout>
@@ -166,6 +167,7 @@ const CourseTable = () => {
       .then((res) => {
         // console.log(res.data);
         setLectures(res.data);
+        // setShowDataFilter(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -189,6 +191,63 @@ const CourseTable = () => {
   useEffect(() => {
     getAllLectures();
   }, []);
+
+  // filter
+  const [searchTerm, setSearchTerm] = useState("");
+  const [instructorName, setInstructorName] = useState([]);
+  const [coursesName, setCourseName] = useState([]);
+  const [filterTerm, setFilterTerm] = useState("");
+  // const [showDataFilter, setShowDataFilter] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/api/courses/courses`)
+      .then((res) => {
+        setCourseName(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(`http://localhost:3000/api/lectures`)
+      .then((res) => {
+        setInstructorName(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  const handleSearchAndFilter = (searchTerm, filterTerm) => {
+    const search = searchTerm.toLowerCase();
+    const filter = filterTerm.toLowerCase();
+
+    const searchResult = lectures.filter(
+      (lecture) =>
+        lecture.instructorName.toLowerCase().includes(search) ||
+        lecture.lectureName.toLowerCase().includes(search)
+    );
+
+    const combinedResult = searchResult.filter(
+      (lecture) =>
+        lecture.instructorName.toLowerCase().includes(filter) ||
+        lecture.lectureName.toLowerCase().includes(filter)
+    );
+
+    // setShowDataFilter(combinedResult);
+    setLectures(combinedResult);
+  };
+
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+    handleSearchAndFilter(value, filterTerm);
+  };
+
+  const handleFilterChange = (value) => {
+    setFilterTerm(value);
+    handleSearchAndFilter(searchTerm, value);
+  };
+
+  // console.log(showDataFilter);
 
   const columns = [
     {
@@ -242,5 +301,51 @@ const CourseTable = () => {
     },
   ];
 
-  return <Table dataSource={lectures} columns={columns} />;
+  return (
+    <>
+      <div
+        className="search_filter"
+        style={{
+          boxShadow:
+            "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+          padding: "15px",
+          borderRadius: "10px",
+        }}
+      >
+        <Search
+          placeholder="Search..."
+          style={{
+            width: 300,
+            marginRight: 20,
+            fontSize: 20,
+          }}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+
+        <Select
+          placeholder="Select Course"
+          style={{ width: 200, fontSize: 16, marginRight: 20 }}
+          onChange={handleFilterChange}
+        >
+          {coursesName.map((ele, i) => (
+            <Option key={i} value={ele.name}>
+              {ele.name}
+            </Option>
+          ))}
+        </Select>
+        <Select
+          placeholder="Instructors"
+          style={{ width: 200, fontSize: 16 }}
+          onChange={handleFilterChange}
+        >
+          {instructorName.map((ele, i) => (
+            <Option key={i} value={ele.instructorName}>
+              {ele.instructorName}
+            </Option>
+          ))}
+        </Select>
+      </div>
+      <Table dataSource={lectures} columns={columns} />
+    </>
+  );
 };

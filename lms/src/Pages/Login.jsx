@@ -1,9 +1,20 @@
 // import React from "react";
-import { Form, Input, Button, Typography, message } from "antd";
+import { Form, Input, Button, Typography, message, Modal } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 import axios from "axios";
+import { useState } from "react";
+
 const Login = () => {
+  const [visible, setVisible] = useState(false);
+
+  const handleButtonClick = () => {
+    setVisible(true);
+  };
+
+  const handleModalOk = () => {
+    setVisible(false);
+  };
   const onFinish = async (values) => {
     try {
       const usersResponse = await axios.get(
@@ -66,6 +77,26 @@ const Login = () => {
         flexDirection: "column",
       }}
     >
+      <Button
+        style={{ position: "absolute", top: "10%", right: "10%" }}
+        type="primary"
+        onClick={handleButtonClick}
+      >
+        Are You Admin Click here
+      </Button>
+      <Modal
+        title="Admin Information"
+        visible={visible}
+        onOk={handleModalOk}
+        onCancel={handleModalOk}
+      >
+        <p>
+          <strong>Email:</strong> admin123@admin.com
+        </p>
+        <p>
+          <strong> Password: </strong> 1234pass
+        </p>
+      </Modal>
       <Title level={2} style={{ marginBottom: 20, fontWeight: "bold" }}>
         Sign In
       </Title>
