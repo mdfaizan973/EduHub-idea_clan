@@ -1,6 +1,6 @@
 // import React from 'react'
 import { useEffect, useState } from "react";
-import { Table, Button, Space, message } from "antd";
+import { Table, Button, Space, message, Modal } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 export default function CourseManage() {
@@ -47,8 +47,18 @@ const CourseTable = () => {
   useEffect(() => {
     getCourseData();
   }, []);
+
   const handleEdit = (key) => {
     console.log(`Editing item with key: ${key}`);
+    Modal.info({
+      title: "Edit Item",
+      content: (
+        <div>
+          <p>Hello</p>
+        </div>
+      ),
+      onOk() {},
+    });
   };
   const columns = [
     {

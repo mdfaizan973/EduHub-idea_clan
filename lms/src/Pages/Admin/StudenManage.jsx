@@ -47,11 +47,7 @@ const AppLayout = () => {
         />
       ),
     },
-    // {
-    //   title: "Code",
-    //   dataIndex: "_id",
-    //   key: "_id",
-    // },
+
     {
       title: "Student Code",
       dataIndex: "_id",
@@ -129,7 +125,7 @@ const AppLayout = () => {
         >
           <NavbarHead />
           <h2 style={{ marginBottom: 20, marginTop: 20, fontWeight: "bold" }}>
-            Course Form
+            All Students
           </h2>
           <Table
             dataSource={students}

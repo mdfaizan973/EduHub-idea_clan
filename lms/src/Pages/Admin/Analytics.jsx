@@ -113,7 +113,10 @@ const AppLayout = () => {
                   </a>,
                 ]}
               >
-                <div className="custom-card-content">
+                <div
+                  className="custom-card-content"
+                  style={{ textAlign: "center" }}
+                >
                   <h3>{course.name}</h3>
                   {/* <p>{course.description}</p> */}
                 </div>
