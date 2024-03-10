@@ -52,7 +52,11 @@ export default function StudentsDashboard() {
   const user_id = sessionStorage.getItem("lmscurrentstudent");
   const [userlectures, setUserLectures] = useState([]);
   const [showDataFilter, setShowDataFilter] = useState([]);
+  const [coursesName, setCourseName] = useState([]);
+  const [instructorName, setInstructorName] = useState([]);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterTerm, setFilterTerm] = useState("");
   useEffect(() => {
     const getUsersCourses = () => {
       axios
@@ -84,24 +88,54 @@ export default function StudentsDashboard() {
     getUsersCourses();
   }, [user_id]);
 
-  const handleSearch = (value) => {
-    const searchTerm = value.toLowerCase();
-    console.log(searchTerm);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/api/courses/courses`)
+      .then((res) => {
+        setCourseName(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(`http://localhost:3000/api/lectures`)
+      .then((res) => {
+        setInstructorName(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Search--Filter
+  const handleSearchAndFilter = (searchTerm, filterTerm) => {
+    const search = searchTerm.toLowerCase();
+    const filter = filterTerm.toLowerCase();
+
     const searchResult = userlectures.filter(
       (lecture) =>
-        lecture.instructorName.toLowerCase().includes(searchTerm) ||
-        lecture.lectureName.toLowerCase().includes(searchTerm)
+        lecture.instructorName.toLowerCase().includes(search) ||
+        lecture.lectureName.toLowerCase().includes(search)
     );
-    setShowDataFilter(searchResult);
+
+    const combinedResult = searchResult.filter(
+      (lecture) =>
+        lecture.instructorName.toLowerCase().includes(filter) ||
+        lecture.lectureName.toLowerCase().includes(filter)
+    );
+
+    setShowDataFilter(combinedResult);
+  };
+
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+    handleSearchAndFilter(value, filterTerm);
   };
 
   const handleFilterChange = (value) => {
-    console.log("Filter value:", value);
+    setFilterTerm(value);
+    handleSearchAndFilter(searchTerm, value);
   };
-
-  // useEffect(() => {
-  //   getUsersCourses();
-  // }, []);
 
   return (
     <div>
@@ -135,23 +169,28 @@ export default function StudentsDashboard() {
             }}
             onChange={(e) => handleSearch(e.target.value)}
           />
+
           <Select
-            placeholder="Filter"
+            placeholder="Select Course"
             style={{ width: 200, fontSize: 16, marginRight: 20 }}
             onChange={handleFilterChange}
           >
-            <Option value="option1">Course</Option>
-            <Option value="option2">Option 2</Option>
-            <Option value="option3">Option 3</Option>
+            {coursesName.map((ele, i) => (
+              <Option key={i} value={ele.name}>
+                {ele.name}
+              </Option>
+            ))}
           </Select>
           <Select
             placeholder="Filter"
             style={{ width: 200, fontSize: 16 }}
             onChange={handleFilterChange}
           >
-            <Option value="option1">Instructor</Option>
-            <Option value="option2">Option 2</Option>
-            <Option value="option3">Option 3</Option>
+            {instructorName.map((ele, i) => (
+              <Option key={i} value={ele.instructorName}>
+                {ele.instructorName}
+              </Option>
+            ))}
           </Select>
         </div>
 
