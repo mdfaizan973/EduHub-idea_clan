@@ -8,6 +8,7 @@ const lectureSchema = new mongoose.Schema({
   lectureName: String,
   lectureTitle: String,
   startTime: Date,
+  discussion: [String],
 });
 
 const Lecture = mongoose.model("Lecture", lectureSchema);
