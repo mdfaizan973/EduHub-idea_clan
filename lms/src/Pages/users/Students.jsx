@@ -7,48 +7,101 @@ import { useEffect, useState } from "react";
 const { Search } = Input;
 const { Option } = Select;
 export default function StudentsDashboard() {
-  const user_id = sessionStorage.getItem("lmscurrentstudent");
-  const [userlectures, setUserLectures] = useState([]);
-
-  const getUsersCourses = () => {
-    axios
-      .get(`http://localhost:3000/api/users/users`)
-      .then((res) => {
-        const users = res.data;
-        const user = users.find((user) => user._id === user_id);
-        if (user) {
-          axios
-            .get(`http://localhost:3000/api/lectures`)
-            .then((res) => {
-              const lectures = res.data;
-              const matchedLectures = lectures.filter((lecture) =>
-                user.courses.some((course) => course === lecture.lectureName)
-              );
-              console.log(matchedLectures);
-              setUserLectures(matchedLectures);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const user_id = sessionStorage.getItem("lmscurrentstudent");
+  // const [userlectures, setUserLectures] = useState([]);
+  // const [showDataFilter, setShowDataFilter] = useState([]);
+  // const getUsersCourses = () => {
+  //   axios
+  //     .get(`http://localhost:3000/api/users/users`)
+  //     .then((res) => {
+  //       const users = res.data;
+  //       const user = users.find((user) => user._id === user_id);
+  //       if (user) {
+  //         axios
+  //           .get(`http://localhost:3000/api/lectures`)
+  //           .then((res) => {
+  //             const lectures = res.data;
+  //             const matchedLectures = lectures.filter((lecture) =>
+  //               user.courses.some((course) => course === lecture.lectureName)
+  //             );
+  //             // console.log(matchedLectures);
+  //             setUserLectures(matchedLectures);
+  //           })
+  //           .catch((err) => {
+  //             console.log(err);
+  //           });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   // Funcationalaties
+  // const handleSearch = (value) => {
+  //   const searchTerm = value.toLowerCase();
+  //   const searchResult = userlectures.filter(
+  //     (lecture) =>
+  //       lecture.instructorName.toLowerCase().includes(searchTerm) ||
+  //       lecture.lectureName.toLowerCase().includes(searchTerm)
+  //   );
+  //   console.log("Search result:", searchResult);
+  //   setShowDataFilter(searchResult);
+  // };
+
+  const user_id = sessionStorage.getItem("lmscurrentstudent");
+  const [userlectures, setUserLectures] = useState([]);
+  const [showDataFilter, setShowDataFilter] = useState([]);
+
+  useEffect(() => {
+    const getUsersCourses = () => {
+      axios
+        .get(`http://localhost:3000/api/users/users`)
+        .then((res) => {
+          const users = res.data;
+          const user = users.find((user) => user._id === user_id);
+          if (user) {
+            axios
+              .get(`http://localhost:3000/api/lectures`)
+              .then((res) => {
+                const lectures = res.data;
+                const matchedLectures = lectures.filter((lecture) =>
+                  user.courses.some((course) => course === lecture.lectureName)
+                );
+                setUserLectures(matchedLectures);
+                setShowDataFilter(matchedLectures); // Show all lectures initially
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getUsersCourses();
+  }, [user_id]);
+
   const handleSearch = (value) => {
-    console.log("Search value:", value);
+    const searchTerm = value.toLowerCase();
+    console.log(searchTerm);
+    const searchResult = userlectures.filter(
+      (lecture) =>
+        lecture.instructorName.toLowerCase().includes(searchTerm) ||
+        lecture.lectureName.toLowerCase().includes(searchTerm)
+    );
+    setShowDataFilter(searchResult);
   };
 
   const handleFilterChange = (value) => {
     console.log("Filter value:", value);
   };
 
-  useEffect(() => {
-    getUsersCourses();
-  }, []);
+  // useEffect(() => {
+  //   getUsersCourses();
+  // }, []);
 
   return (
     <div>
@@ -102,8 +155,8 @@ export default function StudentsDashboard() {
           </Select>
         </div>
 
-        {userlectures.length > 0 ? (
-          userlectures.map((ele, i) => (
+        {showDataFilter.length > 0 ? (
+          showDataFilter.map((ele, i) => (
             <Card key={i} className="horizontal-card" hoverable>
               <div className="card-content">
                 <div className="image-container">

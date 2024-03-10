@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
-import { Card, Avatar, Button, Tag } from "antd";
+import { Card, Avatar, Tag } from "antd";
 
 // import { EditOutlined } from "@ant-design/icons";
 export default function StudentsProfile() {
