@@ -1,16 +1,30 @@
 import Navbar from "./Navbar";
 import { Card, Avatar, Tag } from "antd";
-
+import axios from "axios";
+import { useEffect, useState } from "react";
 // import { EditOutlined } from "@ant-design/icons";
 export default function StudentsProfile() {
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "7890",
-    courses: ["React.js", "Node.js", "Express.js"],
-    image: "https://example.com/profile-image.jpg",
-  };
-  const { name, email, phone, courses } = user;
+  const user_id = sessionStorage.getItem("lmscurrentstudent");
+  const [getUser, setGetuser] = useState({});
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/users/users")
+      .then((res) => {
+        const users = res.data;
+        const user = users.find((user) => user._id === user_id);
+        if (user) {
+          // console.log("User data:", user);
+          setGetuser(user);
+        } else {
+          console.log("User not found");
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching user data:", err);
+      });
+  }, [user_id]);
+  console.log(getUser);
   return (
     <div>
       <Navbar />
@@ -24,9 +38,6 @@ export default function StudentsProfile() {
           height: "100%",
           display: "flex",
           justifyContent: "space-around",
-          //   border: "1px solid green",
-          //   justifyContent: "center",
-          //   alignItems: "center",
         }}
       >
         <Card
@@ -41,19 +52,19 @@ export default function StudentsProfile() {
               size={150}
               hoverable
             />
-            <h1>{name}</h1>
+            <h1>Name: {getUser.name.toUpperCase()}</h1>
           </div>
           <div className="profile-content" style={{ lineHeight: "2" }}>
             <p>
-              <strong>Email:</strong> {email}
+              <strong>Email:</strong> {getUser.email}
             </p>
             <p>
-              <strong>Password:</strong> {phone}
+              <strong>Password:</strong> {getUser.password}
             </p>
             <p>
               <strong>Courses:</strong>
             </p>
-            {courses.map((course, index) => (
+            {getUser.courses.map((course, index) => (
               <Tag key={index} style={{ margin: "15px" }} color="blue">
                 {course}
               </Tag>
