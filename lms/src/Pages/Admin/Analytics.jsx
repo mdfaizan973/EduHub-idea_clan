@@ -20,7 +20,7 @@ const AppLayout = () => {
   const [lectures, setLectures] = useState([]);
   const getTotalUsers = () => {
     axios
-      .get(`http://localhost:3000/api/users/users`)
+      .get(`https://courageous-hare-pants.cyclic.app/api/users/users`)
       .then((res) => {
         console.log(res.data);
         setTotalUsers(res.data.length);
@@ -31,7 +31,7 @@ const AppLayout = () => {
   };
   const getCourseData = () => {
     axios
-      .get(`http://localhost:3000/api/courses/courses`)
+      .get(`https://courageous-hare-pants.cyclic.app/api/courses/courses`)
       .then((res) => {
         // console.log(res.data);
         setCourses(res.data);
@@ -43,7 +43,7 @@ const AppLayout = () => {
 
   const getAllLectures = () => {
     axios
-      .get(`http://localhost:3000/api/lectures`)
+      .get(`https://courageous-hare-pants.cyclic.app/api/lectures`)
       .then((res) => {
         // console.log(res.data);
         setLectures(res.data);

@@ -2,6 +2,7 @@
 import { Form, Input, Button, Typography, message, Modal } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 const { Title } = Typography;
+import "./Style.css";
 import axios from "axios";
 import { useState } from "react";
 
@@ -18,7 +19,7 @@ const Login = () => {
   const onFinish = async (values) => {
     try {
       const usersResponse = await axios.get(
-        "http://localhost:3000/api/users/users"
+        "https://courageous-hare-pants.cyclic.app/api/users/users"
       );
       const users = usersResponse.data;
       const user = users.find(
@@ -36,7 +37,7 @@ const Login = () => {
       } else {
         try {
           const adminsResponse = await axios.get(
-            "http://localhost:3000/api/admins"
+            "https://courageous-hare-pants.cyclic.app/api/admins"
           );
           const admins = adminsResponse.data;
           console.log(admins);
@@ -58,17 +59,18 @@ const Login = () => {
           }
         } catch (error) {
           console.error(error);
-          message.error("An error occurred. Please try again.");
+          message.error("Taking time to data fetch. Try again after sometime.");
         }
       }
     } catch (error) {
       console.error(error);
-      message.error("An error occurred. Please try again.");
+      message.error("Taking time to data fetch. Try again after sometime.");
     }
   };
 
   return (
     <div
+      className="logincontainer"
       style={{
         display: "flex",
         justifyContent: "center",
@@ -82,7 +84,7 @@ const Login = () => {
         type="primary"
         onClick={handleButtonClick}
       >
-        Are You Admin Click here
+        Are You An Admin Click here
       </Button>
       <Modal
         title="Admin Information"

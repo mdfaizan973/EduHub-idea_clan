@@ -36,9 +36,10 @@ const Navbar = () => {
               color: "black",
               fontSize: 25,
               fontWeight: "bold",
+              fontFamily: "cursive",
             }}
           >
-            LMS
+            LMS-FAIZAN
           </div>
         </RouterLink>
       </div>

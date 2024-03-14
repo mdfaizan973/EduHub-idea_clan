@@ -1,12 +1,22 @@
-import { Layout, Table, Button, Space, Tag, message } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import {
+  Layout,
+  Table,
+  Button,
+  Space,
+  Tag,
+  message,
+  Modal,
+  Card,
+  Typography,
+} from "antd";
+import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import NavbarHead from "./NavbarHead";
 import Sidebar from "./Sidebar ";
 import axios from "axios";
 import "./Styles.css";
 import { useEffect, useState } from "react";
+const { Title } = Typography;
 const { Content } = Layout;
-
 export default function StudenManage() {
   return (
     <div>
@@ -14,13 +24,13 @@ export default function StudenManage() {
     </div>
   );
 }
-
 const AppLayout = () => {
   const [students, setStudents] = useState([]);
-
+  const [singleStudents, setSingleStudents] = useState({});
+  const [visible, setVisible] = useState(false);
   const getStudents = () => {
     axios
-      .get(`http://localhost:3000/api/users/users`)
+      .get(`https://courageous-hare-pants.cyclic.app/api/users/users`)
       .then((res) => {
         console.log(res.data);
         setStudents(res.data);
@@ -34,6 +44,18 @@ const AppLayout = () => {
     getStudents();
   }, []);
 
+  const handleView = (id) => {
+    console.log(id);
+    setVisible(true);
+    const user = students.find((user) => user._id === id);
+    if (user) {
+      // console.log(user);
+      setSingleStudents(user);
+    } else {
+      console.log("User not found");
+    }
+  };
+  console.log(singleStudents);
   const columns = [
     {
       title: "Image",
@@ -85,12 +107,15 @@ const AppLayout = () => {
         <Space size="middle">
           <Button
             type="primary"
+            icon={<EyeOutlined />}
+            onClick={() => handleView(record._id)}
+          ></Button>
+          <Button
+            type="primary"
             icon={<DeleteOutlined />}
             onClick={() => handleDelete(record._id)}
             danger
-          >
-            Delete
-          </Button>
+          ></Button>
         </Space>
       ),
     },
@@ -98,7 +123,7 @@ const AppLayout = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:3000/api/users/${id}`)
+      .delete(`https://courageous-hare-pants.cyclic.app/api/users/${id}`)
       .then((res) => {
         console.log(res.data);
         message.error(`Student is Removed `);
@@ -110,6 +135,14 @@ const AppLayout = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleOk = () => {
+    setVisible(false);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
   };
   return (
     <Layout>
@@ -135,6 +168,44 @@ const AppLayout = () => {
           />
         </Content>
       </Layout>
+      <Modal
+        title="Students Details"
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="ok" type="primary" onClick={handleOk}>
+            OK
+          </Button>,
+        ]}
+      >
+        <Card style={{ width: 300 }}>
+          <img
+            src="https://i.pinimg.com/564x/8e/f5/49/8ef549db43e4de09afddc75eb5effc05.jpg"
+            alt="Profile"
+            style={{ width: "50%", height: "auto" }}
+          />
+          <div style={{ padding: "16px" }}>
+            <Title level={4}>Name:</Title>
+            <p style={{ marginBottom: "8px" }}>{singleStudents.name}</p>
+            <Title level={4}>Email:</Title>
+            <p style={{ marginBottom: "8px" }}>{singleStudents.email}</p>
+            <Title level={4}>Password:</Title>
+            <p style={{ marginBottom: "8px" }}>{singleStudents.password}</p>
+            <Title level={4}>Courses:</Title>
+            <p>
+              <strong>Courses:</strong>
+            </p>
+            {singleStudents.courses && (
+              <ul>
+                {singleStudents.courses.map((course, index) => (
+                  <Tag key={index}>{course}</Tag>
+                ))}
+              </ul>
+            )}
+          </div>
+        </Card>
+      </Modal>
     </Layout>
   );
 };

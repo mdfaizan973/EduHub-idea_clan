@@ -20,7 +20,14 @@ const Sidebar = () => {
       theme="light"
     >
       <div className="logo">
-        <h1>LMS</h1>
+        <h1
+          style={{
+            fontFamily: "cursive",
+            cursor: "pointer",
+          }}
+        >
+          LMS-FAIZAN
+        </h1>
       </div>
       <Menu
         mode="inline"

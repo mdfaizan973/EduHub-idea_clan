@@ -12,13 +12,13 @@ export default function StudentsDashboard() {
   // const [showDataFilter, setShowDataFilter] = useState([]);
   // const getUsersCourses = () => {
   //   axios
-  //     .get(`http://localhost:3000/api/users/users`)
+  //     .get(`https://courageous-hare-pants.cyclic.app/api/users/users`)
   //     .then((res) => {
   //       const users = res.data;
   //       const user = users.find((user) => user._id === user_id);
   //       if (user) {
   //         axios
-  //           .get(`http://localhost:3000/api/lectures`)
+  //           .get(`https://courageous-hare-pants.cyclic.app/api/lectures`)
   //           .then((res) => {
   //             const lectures = res.data;
   //             const matchedLectures = lectures.filter((lecture) =>
@@ -60,13 +60,13 @@ export default function StudentsDashboard() {
   useEffect(() => {
     const getUsersCourses = () => {
       axios
-        .get(`http://localhost:3000/api/users/users`)
+        .get(`https://courageous-hare-pants.cyclic.app/api/users/users`)
         .then((res) => {
           const users = res.data;
           const user = users.find((user) => user._id === user_id);
           if (user) {
             axios
-              .get(`http://localhost:3000/api/lectures`)
+              .get(`https://courageous-hare-pants.cyclic.app/api/lectures`)
               .then((res) => {
                 const lectures = res.data;
                 const matchedLectures = lectures.filter((lecture) =>
@@ -90,7 +90,7 @@ export default function StudentsDashboard() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/courses/courses`)
+      .get(`https://courageous-hare-pants.cyclic.app/api/courses/courses`)
       .then((res) => {
         setCourseName(res.data);
       })
@@ -98,7 +98,7 @@ export default function StudentsDashboard() {
         console.log(err);
       });
     axios
-      .get(`http://localhost:3000/api/lectures`)
+      .get(`https://courageous-hare-pants.cyclic.app/api/lectures`)
       .then((res) => {
         setInstructorName(res.data);
       })
@@ -213,7 +213,7 @@ export default function StudentsDashboard() {
                   <Tag style={{ fontSize: "15px" }} color="cyan">
                     {ele.lectureName}
                   </Tag>
-                  <Tag>
+                  <Tag className="timing">
                     {ele.startTime} - {ele.endTime}
                   </Tag>
                 </div>

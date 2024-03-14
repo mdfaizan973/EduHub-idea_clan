@@ -42,7 +42,7 @@ const SignUpPage = () => {
   const onFinish = (values) => {
     // console.log("Received values:", { ...values, courses: selectedCourses });
     axios
-      .post(`http://localhost:3000/api/users/register`, {
+      .post(`https://courageous-hare-pants.cyclic.app/api/users/register`, {
         ...values,
         courses: selectedCourses,
       })
@@ -68,7 +68,7 @@ const SignUpPage = () => {
 
   const getCourses = () => {
     axios
-      .get(`http://localhost:3000/api/courses/courses`)
+      .get(`https://courageous-hare-pants.cyclic.app/api/courses/courses`)
       .then((res) => {
         console.log(res);
         setCourses(res.data);

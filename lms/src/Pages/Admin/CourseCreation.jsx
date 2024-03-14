@@ -31,10 +31,14 @@ const AppLayout = () => {
   const onFinish = (values) => {
     console.log("Received values:", values);
     axios
-      .post(`http://localhost:3000/api/courses/courses`, values)
+      .post(
+        `https://courageous-hare-pants.cyclic.app/api/courses/courses`,
+        values
+      )
       .then((res) => {
         console.log(res);
         message.success("Form submitted successfully!");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

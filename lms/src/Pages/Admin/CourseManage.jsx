@@ -19,7 +19,7 @@ const CourseTable = () => {
 
   const getCourseData = () => {
     axios
-      .get(`http://localhost:3000/api/courses/courses`)
+      .get(`https://courageous-hare-pants.cyclic.app/api/courses/courses`)
       .then((res) => {
         // console.log(res.data);
         setCourses(res.data);
@@ -32,7 +32,7 @@ const CourseTable = () => {
   const handleDelete = (id) => {
     // console.log(`Deleting item with id: ${id}`);
     axios
-      .delete(`http://localhost:3000/api/courses/${id}`)
+      .delete(`https://courageous-hare-pants.cyclic.app/api/courses/${id}`)
       .then((res) => {
         console.log(res.data);
         message.error(`Course is Removed `);
@@ -61,7 +61,10 @@ const CourseTable = () => {
   const onFinish = (values) => {
     console.log("Received values:", values);
     axios
-      .put(`http://localhost:3000/api/courses/courses/${courseId}`, values)
+      .put(
+        `https://courageous-hare-pants.cyclic.app/api/courses/courses/${courseId}`,
+        values
+      )
       .then((res) => {
         console.log(res);
         window.location.reload();

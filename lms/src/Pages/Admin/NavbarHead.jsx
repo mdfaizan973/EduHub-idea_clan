@@ -70,7 +70,7 @@ export default function NavbarHead() {
               fontWeight: "bold",
             }}
           >
-            LMS Admin Panel
+            Admin Panel
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
