@@ -4,13 +4,13 @@
 <p>EduHub is a comprehensive LMS designed to facilitate interactive online learning by connecting instructors (admins) and students through courses and live lectures. The platform emphasizes personalized learning experiences, allowing students to select courses that match their interests and engage deeply with the course content and fellow learners.</p>
 <br/>
 <h2>Portfolio</h2>
-<p>Check out my portfolio <a href="https://your-portfolio-url.com">here</a>.</p>
+<p>Check out my portfolio <a href="https://mdfaizan973.github.io/">here</a>.</p>
 
 <h2>LinkedIn</h2>
-<p>Connect with me on LinkedIn <a href="https://www.linkedin.com/in/your-linkedin-profile/">here</a>.</p>
+<p>Connect with me on LinkedIn <a href="https://www.linkedin.com/in/md-faizan973/">here</a>.</p>
 
 <h2>Project Deployment</h2>
-<p>View the deployed project <a href="https://your-project-deployment-url.com">here</a>.</p>
+<p>View the deployed project <a href="https://faizanlms.vercel.app/">here</a>.</p>
 
 <br/>
 <h2>Features</h2>
