@@ -32,4 +32,23 @@ const deleteCourse = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-module.exports = { createCourse, getAllCourses, deleteCourse };
+const updateCourse = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, imageLink, description, docsLink } = req.body;
+    const updatedCourse = await Course.findByIdAndUpdate(
+      id,
+      { name, imageLink, description, docsLink },
+      { new: true }
+    );
+    if (!updatedCourse) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+    res.status(200).json(updatedCourse);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = { createCourse, getAllCourses, deleteCourse, updateCourse };
