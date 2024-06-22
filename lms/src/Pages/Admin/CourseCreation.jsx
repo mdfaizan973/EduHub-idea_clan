@@ -31,10 +31,7 @@ const AppLayout = () => {
   const onFinish = (values) => {
     console.log("Received values:", values);
     axios
-      .post(
-        `https://courageous-hare-pants.cyclic.app/api/courses/courses`,
-        values
-      )
+      .post(`https://lmshub.vercel.app/api/courses/courses`, values)
       .then((res) => {
         console.log(res);
         message.success("Form submitted successfully!");

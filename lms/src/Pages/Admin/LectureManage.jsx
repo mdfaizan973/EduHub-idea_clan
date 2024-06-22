@@ -21,7 +21,7 @@ const AppLayout = () => {
   const onFinish = (values) => {
     console.log("Received values:", values);
     axios
-      .post(`https://courageous-hare-pants.cyclic.app/api/lectures`, values)
+      .post(`https://lmshub.vercel.app/api/lectures`, values)
       .then((res) => {
         console.log(res.data);
         message.success("Lecture has been successfully created");
@@ -163,7 +163,7 @@ const CourseTable = () => {
 
   const getAllLectures = () => {
     axios
-      .get(`https://courageous-hare-pants.cyclic.app/api/lectures`)
+      .get(`https://lmshub.vercel.app/api/lectures`)
       .then((res) => {
         // console.log(res.data);
         setLectures(res.data);
@@ -175,7 +175,7 @@ const CourseTable = () => {
   };
   const handleDelete = (id) => {
     axios
-      .delete(`https://courageous-hare-pants.cyclic.app/api/lectures/${id}`)
+      .delete(`https://lmshub.vercel.app/api/lectures/${id}`)
       .then((res) => {
         console.log(res.data);
         message.error(`Lecture is Removed `);
@@ -201,7 +201,7 @@ const CourseTable = () => {
 
   useEffect(() => {
     axios
-      .get(`https://courageous-hare-pants.cyclic.app/api/courses/courses`)
+      .get(`https://lmshub.vercel.app/api/courses/courses`)
       .then((res) => {
         setCourseName(res.data);
       })
@@ -209,7 +209,7 @@ const CourseTable = () => {
         console.log(err);
       });
     axios
-      .get(`https://courageous-hare-pants.cyclic.app/api/lectures`)
+      .get(`https://lmshub.vercel.app/api/lectures`)
       .then((res) => {
         setInstructorName(res.data);
       })

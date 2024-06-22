@@ -19,7 +19,7 @@ const CourseTable = () => {
 
   const getCourseData = () => {
     axios
-      .get(`https://courageous-hare-pants.cyclic.app/api/courses/courses`)
+      .get(`https://lmshub.vercel.app/api/courses/courses`)
       .then((res) => {
         // console.log(res.data);
         setCourses(res.data);
@@ -32,7 +32,7 @@ const CourseTable = () => {
   const handleDelete = (id) => {
     // console.log(`Deleting item with id: ${id}`);
     axios
-      .delete(`https://courageous-hare-pants.cyclic.app/api/courses/${id}`)
+      .delete(`https://lmshub.vercel.app/api/courses/${id}`)
       .then((res) => {
         console.log(res.data);
         message.error(`Course is Removed `);
@@ -62,7 +62,7 @@ const CourseTable = () => {
     console.log("Received values:", values);
     axios
       .put(
-        `https://courageous-hare-pants.cyclic.app/api/courses/courses/${courseId}`,
+        `https://lmshub.vercel.app/api/courses/courses/${courseId}`,
         values
       )
       .then((res) => {

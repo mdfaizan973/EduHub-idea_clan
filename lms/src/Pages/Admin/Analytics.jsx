@@ -20,7 +20,7 @@ const AppLayout = () => {
   const [lectures, setLectures] = useState([]);
   const getTotalUsers = () => {
     axios
-      .get(`https://courageous-hare-pants.cyclic.app/api/users/users`)
+      .get(`https://lmshub.vercel.app/api/users/users`)
       .then((res) => {
         console.log(res.data);
         setTotalUsers(res.data.length);
@@ -31,7 +31,7 @@ const AppLayout = () => {
   };
   const getCourseData = () => {
     axios
-      .get(`https://courageous-hare-pants.cyclic.app/api/courses/courses`)
+      .get(`https://lmshub.vercel.app/api/courses/courses`)
       .then((res) => {
         // console.log(res.data);
         setCourses(res.data);
@@ -43,7 +43,7 @@ const AppLayout = () => {
 
   const getAllLectures = () => {
     axios
-      .get(`https://courageous-hare-pants.cyclic.app/api/lectures`)
+      .get(`https://lmshub.vercel.app/api/lectures`)
       .then((res) => {
         // console.log(res.data);
         setLectures(res.data);

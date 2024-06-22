@@ -19,7 +19,7 @@ const Login = () => {
   const onFinish = async (values) => {
     try {
       const usersResponse = await axios.get(
-        "https://courageous-hare-pants.cyclic.app/api/users/users"
+        "https://lmshub.vercel.app/api/users/users"
       );
       const users = usersResponse.data;
       const user = users.find(
@@ -37,7 +37,7 @@ const Login = () => {
       } else {
         try {
           const adminsResponse = await axios.get(
-            "https://courageous-hare-pants.cyclic.app/api/admins"
+            "https://lmshub.vercel.app/api/admins"
           );
           const admins = adminsResponse.data;
           console.log(admins);

@@ -20,7 +20,7 @@ export default function StudentsProfile() {
 
   useEffect(() => {
     axios
-      .get("https://courageous-hare-pants.cyclic.app/api/users/users")
+      .get("https://lmshub.vercel.app/api/users/users")
       .then((res) => {
         const users = res.data;
         const user = users.find((user) => user._id === user_id);
@@ -37,10 +37,7 @@ export default function StudentsProfile() {
 
   const handleUpdate = (value) => {
     axios
-      .put(
-        `https://courageous-hare-pants.cyclic.app/api/users/${user_id}`,
-        value
-      )
+      .put(`https://lmshub.vercel.app/api/users/${user_id}`, value)
       .then((res) => {
         // console.log(res);
         message.success("Your Profile has been Updated successfully 🎊🎊");

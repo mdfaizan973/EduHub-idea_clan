@@ -13,9 +13,10 @@ import {
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import axios from "axios";
 const { Title } = Typography;
+import "./Style.css";
 export default function Register() {
   return (
-    <div>
+    <div className="logincontainer">
       <SignUpPage />
     </div>
   );
@@ -42,7 +43,7 @@ const SignUpPage = () => {
   const onFinish = (values) => {
     // console.log("Received values:", { ...values, courses: selectedCourses });
     axios
-      .post(`https://courageous-hare-pants.cyclic.app/api/users/register`, {
+      .post(`https://lmshub.vercel.app/api/users/register`, {
         ...values,
         courses: selectedCourses,
       })
@@ -68,7 +69,7 @@ const SignUpPage = () => {
 
   const getCourses = () => {
     axios
-      .get(`https://courageous-hare-pants.cyclic.app/api/courses/courses`)
+      .get(`https://lmshub.vercel.app/api/courses/courses`)
       .then((res) => {
         console.log(res);
         setCourses(res.data);

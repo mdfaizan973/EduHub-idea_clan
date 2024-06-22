@@ -30,7 +30,7 @@ const AppLayout = () => {
   const [visible, setVisible] = useState(false);
   const getStudents = () => {
     axios
-      .get(`https://courageous-hare-pants.cyclic.app/api/users/users`)
+      .get(`https://lmshub.vercel.app/api/users/users`)
       .then((res) => {
         console.log(res.data);
         setStudents(res.data);
@@ -123,7 +123,7 @@ const AppLayout = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`https://courageous-hare-pants.cyclic.app/api/users/${id}`)
+      .delete(`https://lmshub.vercel.app/api/users/${id}`)
       .then((res) => {
         console.log(res.data);
         message.error(`Student is Removed `);
