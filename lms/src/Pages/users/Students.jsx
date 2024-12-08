@@ -57,36 +57,36 @@ export default function StudentsDashboard() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
-  useEffect(() => {
-    const getUsersCourses = () => {
-      axios
-        .get(`https://lmshub.vercel.app/api/users/users`)
-        .then((res) => {
-          const users = res.data;
-          const user = users.find((user) => user._id === user_id);
-          if (user) {
-            axios
-              .get(`https://lmshub.vercel.app/api/lectures`)
-              .then((res) => {
-                const lectures = res.data;
-                const matchedLectures = lectures.filter((lecture) =>
-                  user.courses.some((course) => course === lecture.lectureName)
-                );
-                setUserLectures(matchedLectures);
-                setShowDataFilter(matchedLectures); // Show all lectures initially
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
 
+  useEffect(() => {
     getUsersCourses();
   }, [user_id]);
+  const getUsersCourses = () => {
+    axios
+      .get(`https://lmshub.vercel.app/api/users/users`)
+      .then((res) => {
+        const users = res.data;
+        const user = users.find((user) => user._id === user_id);
+        if (user) {
+          axios
+            .get(`https://lmshub.vercel.app/api/lectures`)
+            .then((res) => {
+              const lectures = res.data;
+              const matchedLectures = lectures.filter((lecture) =>
+                user.courses.some((course) => course === lecture.lectureName)
+              );
+              setUserLectures(matchedLectures);
+              setShowDataFilter(matchedLectures); // Show all lectures initially
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     axios
@@ -115,7 +115,8 @@ export default function StudentsDashboard() {
     const searchResult = userlectures.filter(
       (lecture) =>
         lecture.instructorName.toLowerCase().includes(search) ||
-        lecture.lectureName.toLowerCase().includes(search)
+        lecture.lectureName.toLowerCase().includes(search) ||
+        lecture.lectureTitle.toLowerCase().includes(search)
     );
 
     const combinedResult = searchResult.filter(
@@ -135,6 +136,14 @@ export default function StudentsDashboard() {
   const handleFilterChange = (value) => {
     setFilterTerm(value);
     handleSearchAndFilter(searchTerm, value);
+  };
+
+  const handleOldClass = () => {
+    const oldLectureData = userlectures.filter(
+      (lecture) =>
+        lecture.lectureTitle.toLowerCase().trim().includes("class done") // Both strings are now lowercase
+    );
+    setShowDataFilter(oldLectureData);
   };
 
   return (
@@ -192,6 +201,9 @@ export default function StudentsDashboard() {
               </Option>
             ))}
           </Select>
+
+          <Button onClick={handleOldClass}>Old Class</Button>
+          <Button onClick={getUsersCourses}>Reset Filter</Button>
         </div>
 
         {showDataFilter.length > 0 ? (
