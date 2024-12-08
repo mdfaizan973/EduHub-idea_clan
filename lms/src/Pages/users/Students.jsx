@@ -54,7 +54,7 @@ export default function StudentsDashboard() {
   const [showDataFilter, setShowDataFilter] = useState([]);
   const [coursesName, setCourseName] = useState([]);
   const [instructorName, setInstructorName] = useState([]);
-
+  const [oldLectureData, setOldLectureData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
 
@@ -77,6 +77,15 @@ export default function StudentsDashboard() {
               );
               setUserLectures(matchedLectures);
               setShowDataFilter(matchedLectures); // Show all lectures initially
+              const oldLectureData = matchedLectures.filter(
+                (lecture) =>
+                  lecture.lectureTitle
+                    .toLowerCase()
+                    .trim()
+                    .includes("class done") // Both strings are now lowercase
+              );
+              // setShowDataFilter(oldLectureData);
+              setOldLectureData(oldLectureData);
             })
             .catch((err) => {
               console.log(err);
@@ -141,9 +150,10 @@ export default function StudentsDashboard() {
   const handleOldClass = () => {
     const oldLectureData = userlectures.filter(
       (lecture) =>
-        lecture.lectureTitle.toLowerCase().trim().includes("class done") // Both strings are now lowercase
+        !lecture.lectureTitle.toLowerCase().trim().includes("class done") // Both strings are now lowercase
     );
     setShowDataFilter(oldLectureData);
+    // setOldLectureData(oldLectureData);
   };
 
   return (
@@ -195,59 +205,108 @@ export default function StudentsDashboard() {
             style={{ width: 200, fontSize: 16 }}
             onChange={handleFilterChange}
           >
-            {instructorName.map((ele, i) => (
+            {/* {instructorName.map((ele, i) => (
               <Option key={i} value={ele.instructorName}>
                 {ele.instructorName}
+              </Option>
+            ))} */}
+            {Array.from(
+              new Set(instructorName.map((ele) => ele.instructorName))
+            ).map((uniqueName, i) => (
+              <Option key={i} value={uniqueName}>
+                {uniqueName}
               </Option>
             ))}
           </Select>
 
-          <Button onClick={handleOldClass}>Old Class</Button>
+          <Button onClick={handleOldClass}>Live Class</Button>
           <Button onClick={getUsersCourses}>Reset Filter</Button>
         </div>
 
-        {showDataFilter.length > 0 ? (
-          showDataFilter.map((ele, i) => (
-            <Card key={i} className="horizontal-card" hoverable>
-              <div className="card-content">
-                <div className="image-container">
-                  <img
-                    className="image_container_image"
-                    alt="image"
-                    src="https://students.masaischool.com/static/media/openBookImage.95b8e8b4378306339c056f175c2f9b66.svg"
-                  />
-                </div>
-                <div className="details">
-                  <h3>
-                    {ele.lectureTitle}{" "}
-                    <Tag color="volcano">{ele.instructorName}</Tag>
-                  </h3>
-                  <Tag style={{ fontSize: "15px" }} color="cyan">
-                    {ele.lectureName}
-                  </Tag>
-                  <Tag className="timing">
-                    {ele.startTime} - {ele.endTime}
-                  </Tag>
-                </div>
-                <div className="join-button">
-                  <RouterLink target="_blank" to={ele.classLink}>
-                    <Button type="primary">Join</Button>
-                  </RouterLink>
-                </div>
-              </div>
-            </Card>
-          ))
-        ) : (
-          <div style={{ textAlign: "center", padding: "20px", color: "#999" }}>
-            <img
-              src="https://i.pinimg.com/564x/8b/7e/65/8b7e65332e15477927f2650c480b2e08.jpg"
-              alt="No lectures today"
-              style={{ maxWidth: "200px", marginBottom: "10px" }}
-            />
-            <div style={{ fontSize: "30px" }}>No lectures today</div>
+        <div className="lectures_list_dashboard">
+          <div>
+            {showDataFilter.length > 0 ? (
+              showDataFilter.reverse().map((ele, i) => (
+                <Card key={i} className="horizontal-card" hoverable>
+                  <div className="card-content">
+                    <div className="image-container">
+                      <img
+                        className="image_container_image"
+                        alt="image"
+                        src="https://students.masaischool.com/static/media/openBookImage.95b8e8b4378306339c056f175c2f9b66.svg"
+                      />
+                    </div>
+                    <div className="details">
+                      <h3>
+                        {ele.lectureTitle}{" "}
+                        <Tag color="volcano">{ele.instructorName}</Tag>
+                      </h3>
+                      <Tag style={{ fontSize: "15px" }} color="cyan">
+                        {ele.lectureName}
+                      </Tag>
+                      <Tag className="timing">
+                        {ele.startTime} - {ele.endTime}
+                      </Tag>
+                    </div>
+                    <div className="join-button">
+                      <RouterLink target="_blank" to={ele.classLink}>
+                        <Button type="primary">
+                          {" "}
+                          {ele.lectureTitle.toLowerCase().includes("class done")
+                            ? "Notes"
+                            : "Join"}
+                        </Button>
+                      </RouterLink>
+                    </div>
+                  </div>
+                </Card>
+              ))
+            ) : (
+              <NoDataPresent text={"No lectures today"} />
+            )}
           </div>
-        )}
+
+          <div className="oldclassList">
+            <h4>Lectures Notes: </h4>
+            <br />
+            {oldLectureData.length > 0 ? (
+              oldLectureData.map((ele, i) => (
+                <Card
+                  key={i}
+                  title={`Lecture : ${ele.lectureName}`} // Dynamic title
+                  style={{ marginBottom: "16px" }} // Adds spacing between cards
+                >
+                  <div>
+                    <p color="green">{ele.lectureTitle}</p>
+                    <Tag color="blue">{ele.instructorName}</Tag>
+                  </div>
+                  <br />
+                  <RouterLink target="_blank" to={ele.classLink}>
+                    <Button type="primary">Notes</Button>
+                  </RouterLink>
+                </Card>
+              ))
+            ) : (
+              <NoDataPresent text={"No Notes"} />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
 }
+
+const NoDataPresent = (text) => {
+  return (
+    <>
+      <div style={{ textAlign: "center", padding: "20px", color: "#999" }}>
+        <img
+          src="https://i.pinimg.com/564x/8b/7e/65/8b7e65332e15477927f2650c480b2e08.jpg"
+          alt="No lectures today"
+          style={{ maxWidth: "200px", marginBottom: "10px" }}
+        />
+        <div style={{ fontSize: "30px" }}>{text.text}</div>
+      </div>
+    </>
+  );
+};

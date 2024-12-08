@@ -82,18 +82,36 @@
 .custom-card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
+.lectures_list_dashboard {
+  display: flex;
+  justify-content: space-between;
+}
 /* horizontal card */
 .horizontal-card {
   margin: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
+  width: 100%;
 }
 
 .horizontal-card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+.oldclassList {
+  margin: 20px;
+  border-radius: 10px;
+  width: 25%;
+  padding: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+
+.oldclassList:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 .card-content {
   display: flex;
   align-items: center;
