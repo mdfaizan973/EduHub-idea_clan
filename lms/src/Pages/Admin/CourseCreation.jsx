@@ -8,7 +8,6 @@ import { useState } from "react";
 import NavbarHead from "./NavbarHead";
 import CourseManage from "./CourseManage";
 import axios from "axios";
-
 export default function CourseCreation() {
   return (
     <div>
