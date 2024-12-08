@@ -30,7 +30,7 @@ const Login = () => {
       if (user) {
         sessionStorage.setItem("lmscurrentstudent", user._id);
         message.success("Login Successful!");
-        sessionStorage.setItem("`user_logged_in`", "true");
+        sessionStorage.setItem("user_logged_in", "true");
         setTimeout(() => {
           window.location.href = "/students";
         }, 1000);
