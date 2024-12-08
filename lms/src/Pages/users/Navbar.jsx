@@ -6,6 +6,7 @@ const { Header } = Layout;
 const Navbar = () => {
   const handleLogout = () => {
     sessionStorage.removeItem("user_logged_in");
+    sessionStorage.removeItem("super_admin_logged_in");
     setTimeout(() => {
       window.location.href = "/";
     }, 800);

@@ -18,6 +18,9 @@ export default function LectureManage() {
   );
 }
 const AppLayout = () => {
+  const [courseNameForm, setCourseNameForm] = useState([]);
+  const [submitLec, setSubmitLec] = useState(0);
+
   const onFinish = (values) => {
     console.log("Received values:", values);
     axios
@@ -25,12 +28,41 @@ const AppLayout = () => {
       .then((res) => {
         console.log(res.data);
         message.success("Lecture has been successfully created");
+        setSubmitLec(submitLec + 1);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  useEffect(() => {
+    getAllCoursesName();
+  }, []);
+
+  const getAllCoursesName = () => {
+    axios
+      .get(`https://lmshub.vercel.app/api/courses/courses`)
+      .then((res) => {
+        if (res.data) {
+          preapreListOfName(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const preapreListOfName = (coursedata) => {
+    let coursesNameArray = [];
+
+    coursedata.forEach((ele, i) => {
+      coursesNameArray.push({
+        value: i,
+        name: ele.name,
+      });
+    });
+    setCourseNameForm(coursesNameArray);
+  };
   return (
     <Layout>
       <Sidebar />
@@ -80,7 +112,18 @@ const AppLayout = () => {
                     { required: true, message: "Please input course name!" },
                   ]}
                 >
-                  <Input placeholder="Course Name" />
+                  {/* <Input placeholder="Course Name" /> */}
+                  <Select
+                    placeholder="Select Course"
+                    style={{ fontSize: 16, marginRight: 20 }}
+                    // onChange={handleFilterChange}
+                  >
+                    {courseNameForm.map((ele, i) => (
+                      <Option key={i} value={ele.name}>
+                        {ele.name}
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
                 <Form.Item
                   name="lectureTitle"
@@ -152,15 +195,19 @@ const AppLayout = () => {
           {" "}
           Lectures Management
         </h1>
-        <CourseTable />
+        <CourseTable submitLec={submitLec} />
       </Layout>
     </Layout>
   );
 };
 
-const CourseTable = () => {
+const CourseTable = (submitLec) => {
   const [lectures, setLectures] = useState([]);
-
+  // const [courseName, setCourseName] = useState([]);
+  const superadmin = sessionStorage.getItem("super_admin_logged_in");
+  const [isSuperAdminOk, setIsSuperAdminOk] = useState(
+    superadmin == "true" ? true : false
+  );
   const getAllLectures = () => {
     axios
       .get(`https://lmshub.vercel.app/api/lectures`)
@@ -173,6 +220,7 @@ const CourseTable = () => {
         console.log(err);
       });
   };
+
   const handleDelete = (id) => {
     axios
       .delete(`https://lmshub.vercel.app/api/lectures/${id}`)
@@ -180,9 +228,12 @@ const CourseTable = () => {
         console.log(res.data);
         message.error(`Lecture is Removed `);
 
-        setLectures((prevLecture) =>
-          prevLecture.filter((lecture) => lecture._id !== id)
-        );
+        // setLectures((prevLecture) =>
+        //   prevLecture.filter((lecture) => lecture._id !== id)
+        // );
+        if (res) {
+          getAllLectures();
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -190,7 +241,7 @@ const CourseTable = () => {
   };
   useEffect(() => {
     getAllLectures();
-  }, []);
+  }, [submitLec]);
 
   // filter
   const [searchTerm, setSearchTerm] = useState("");
@@ -217,6 +268,7 @@ const CourseTable = () => {
         console.log(err);
       });
   }, []);
+
   const handleSearchAndFilter = (searchTerm, filterTerm) => {
     const search = searchTerm.toLowerCase();
     const filter = filterTerm.toLowerCase();
@@ -246,8 +298,6 @@ const CourseTable = () => {
     setFilterTerm(value);
     handleSearchAndFilter(searchTerm, value);
   };
-
-  // console.log(showDataFilter);
 
   const columns = [
     {
@@ -293,6 +343,7 @@ const CourseTable = () => {
           <Button
             type="primary"
             icon={<DeleteOutlined />}
+            disabled={!isSuperAdminOk}
             onClick={() => handleDelete(record._id)}
             danger
           ></Button>

@@ -6,6 +6,8 @@ import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 export default function NavbarHead() {
   const handleLogout = () => {
     sessionStorage.removeItem("admin_logged_in");
+    sessionStorage.removeItem("super_admin_logged_in");
+
     setTimeout(() => {
       window.location.href = "/";
     }, 800);

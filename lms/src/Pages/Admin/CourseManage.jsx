@@ -5,18 +5,22 @@ import { Form, Input } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 export default function CourseManage() {
+  const superadmin = sessionStorage.getItem("super_admin_logged_in");
   return (
     <div>
       <h1> Course Management</h1>
-      <CourseTable />
+      <CourseTable isSuperAdmin={superadmin} />
     </div>
   );
 }
 
-const CourseTable = () => {
+const CourseTable = (isSuperAdmin) => {
   const [courses, setCourses] = useState([]);
   const [visible, setVisible] = useState(false);
-
+  const [isSuperAdminOk, setIsSuperAdminOk] = useState(
+    isSuperAdmin.isSuperAdmin == "true" ? true : false
+  );
+  console.log(isSuperAdmin.isSuperAdmin);
   const getCourseData = () => {
     axios
       .get(`https://lmshub.vercel.app/api/courses/courses`)
@@ -47,6 +51,7 @@ const CourseTable = () => {
   };
   const [imageUrl, setImageUrl] = useState(null);
   const [courseId, setCourseId] = useState(null);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -61,10 +66,7 @@ const CourseTable = () => {
   const onFinish = (values) => {
     console.log("Received values:", values);
     axios
-      .put(
-        `https://lmshub.vercel.app/api/courses/courses/${courseId}`,
-        values
-      )
+      .put(`https://lmshub.vercel.app/api/courses/courses/${courseId}`, values)
       .then((res) => {
         console.log(res);
         window.location.reload();
@@ -87,6 +89,7 @@ const CourseTable = () => {
   const handleClose = () => {
     setVisible(false);
   };
+
   const columns = [
     {
       title: "Image",
@@ -133,6 +136,7 @@ const CourseTable = () => {
           <Button
             type="primary"
             icon={<EditOutlined />}
+            disabled={!isSuperAdminOk}
             onClick={() => handleEdit(record._id)}
           >
             Edit
@@ -141,6 +145,7 @@ const CourseTable = () => {
             type="primary"
             danger
             icon={<DeleteOutlined />}
+            disabled={!isSuperAdminOk}
             onClick={() => handleDelete(record._id)}
           >
             Delete

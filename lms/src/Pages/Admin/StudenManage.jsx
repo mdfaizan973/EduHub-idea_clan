@@ -28,11 +28,15 @@ const AppLayout = () => {
   const [students, setStudents] = useState([]);
   const [singleStudents, setSingleStudents] = useState({});
   const [visible, setVisible] = useState(false);
+  const superadmin = sessionStorage.getItem("super_admin_logged_in");
+  const [isSuperAdminOk, setIsSuperAdminOk] = useState(
+    superadmin == "true" ? true : false
+  );
+
   const getStudents = () => {
     axios
       .get(`https://lmshub.vercel.app/api/users/users`)
       .then((res) => {
-        console.log(res.data);
         setStudents(res.data);
       })
       .catch((err) => {
@@ -55,7 +59,7 @@ const AppLayout = () => {
       console.log("User not found");
     }
   };
-  console.log(singleStudents);
+
   const columns = [
     {
       title: "Image",
@@ -113,6 +117,7 @@ const AppLayout = () => {
           <Button
             type="primary"
             icon={<DeleteOutlined />}
+            disabled={!isSuperAdminOk}
             onClick={() => handleDelete(record._id)}
             danger
           ></Button>

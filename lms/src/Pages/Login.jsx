@@ -30,7 +30,7 @@ const Login = () => {
       if (user) {
         sessionStorage.setItem("lmscurrentstudent", user._id);
         message.success("Login Successful!");
-        sessionStorage.setItem("user_logged_in", "true");
+        sessionStorage.setItem("`user_logged_in`", "true");
         setTimeout(() => {
           window.location.href = "/students";
         }, 1000);
@@ -46,7 +46,14 @@ const Login = () => {
               admin.email === values.adminEmail &&
               admin.password === values.password
           );
-
+          if (
+            values.email === "jhon@admin.com" &&
+            values.password === "jhon12"
+          ) {
+            sessionStorage.setItem("super_admin_logged_in", true);
+          } else {
+            sessionStorage.setItem("super_admin_logged_in", false);
+          }
           if (admin) {
             message.success("Admin Login Successful!");
             sessionStorage.setItem("admin_logged_in", "true");
