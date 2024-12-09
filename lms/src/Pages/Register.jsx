@@ -11,7 +11,12 @@ import {
   message,
   Drawer,
 } from "antd";
-import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  MailOutlined,
+  LockOutlined,
+  CheckCircleOutlined,
+} from "@ant-design/icons";
 import axios from "axios";
 const { Title } = Typography;
 import "./Style.css";
@@ -94,7 +99,7 @@ const SignUpPage = () => {
   const onClose = () => {
     setVisible(false);
   };
-  const colors = ["#002c8c", "#28a745", "#ffc107"];
+  const colors = ["#2ed0ee", "#f0512b", "#ffc107"];
   return (
     <div
       style={{
@@ -221,8 +226,13 @@ const SignUpPage = () => {
                   onClick={() => onCardClick(course)}
                   style={{
                     cursor: "pointer",
+                    // backgroundColor: selectedCourses.includes(course.name)
+                    //   ? `#${Math.floor(Math.random() * 16777215).toString(16)}` // Generate random color
+                    //   : "white",
                     backgroundColor: selectedCourses.includes(course.name)
-                      ? `#${Math.floor(Math.random() * 16777215).toString(16)}` // Generate random color
+                      ? colors[
+                          selectedCourses.indexOf(course.name) % colors.length
+                        ] // Cycle through colors
                       : "white",
                     border: "1px solid #d9d9d9",
                     borderRadius: "5px",
@@ -271,6 +281,26 @@ const SignUpPage = () => {
                       }}
                     >
                       {course.name}
+                    </div>
+                    <div
+                      style={{
+                        // border: "1px solid green",
+                        marginRight: "10px",
+                        borderRadius: "50%",
+                        // height: "20px",
+                        // width: "20px",
+                        // backgroundColor: selectedCourses.includes(course.name)
+                        //   ? "red"
+                        //   : "white",
+                        fontSize: "20px",
+                      }}
+                    >
+                      {/* 🌐 */}
+                      {selectedCourses.includes(course.name) ? (
+                        <CheckCircleOutlined />
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
                 </Card>
