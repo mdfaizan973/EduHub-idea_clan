@@ -151,6 +151,18 @@ const Login = () => {
       <div style={{ marginTop: 20 }}>
         Do not have an account? <a href="/register">Register now!</a>
       </div>
+      <br />
+
+      <footer className="footer">
+        <div className="links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms and Conditions</a>
+        </div>
+      </footer>
+      <br />
+      <div className="copyright">
+        © 2024 by <a href="https://mdfaizan973.github.io/">Md Faizan</a>
+      </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   message,
+  Drawer,
 } from "antd";
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -31,9 +32,10 @@ const SignUpPage = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
+  const handleSubmitCourse = () => {
     setIsModalVisible(false);
     setIsSignUpDisabled(selectedCourses.length !== 3);
+    setVisible(false);
   };
 
   const handleCancel = () => {
@@ -78,9 +80,21 @@ const SignUpPage = () => {
         console.log(err);
       });
   };
+
   useEffect(() => {
     getCourses();
   }, []);
+
+  const [visible, setVisible] = useState(false);
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
+  };
+  const colors = ["#002c8c", "#28a745", "#ffc107"];
   return (
     <div
       style={{
@@ -129,7 +143,8 @@ const SignUpPage = () => {
         <Form.Item>
           <Button
             type="primary"
-            onClick={showModal}
+            // onClick={showModal}
+            onClick={showDrawer}
             style={{
               width: "100%",
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -154,7 +169,7 @@ const SignUpPage = () => {
       <Modal
         title="Select 3 Courses As Per Your Choice"
         visible={isModalVisible}
-        onOk={handleOk}
+        onOk={handleSubmitCourse}
         onCancel={handleCancel}
       >
         <Row gutter={[16, 16]}>
@@ -192,8 +207,101 @@ const SignUpPage = () => {
         </Row>
       </Modal>
 
+      <Drawer
+        title="Select 3 Courses As Per Your Choice" // Optional title
+        placement="right"
+        onClose={onClose}
+        open={visible}
+      >
+        <div>
+          <Row gutter={[16, 16]}>
+            {courses.map((course) => (
+              <Col key={course.name} span={24}>
+                <Card
+                  onClick={() => onCardClick(course)}
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor: selectedCourses.includes(course.name)
+                      ? `#${Math.floor(Math.random() * 16777215).toString(16)}` // Generate random color
+                      : "white",
+                    border: "1px solid #d9d9d9",
+                    borderRadius: "5px",
+                    padding: "0px !important",
+                    height: "100%",
+                  }}
+                  bodyStyle={{
+                    padding: 0, // Set padding to 0
+                  }}
+                >
+                  {/* Custom Wrapper for Horizontal Layout */}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "0px",
+                    }}
+                  >
+                    {/* Image Section */}
+                    <img
+                      src={course.imageLink}
+                      alt={course.name}
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "cover",
+                        borderRadius: "5px",
+                        marginRight: "16px",
+                      }}
+                      onError={(e) => {
+                        e.target.onerror = null; // Prevent infinite loop
+                        e.target.src =
+                          "https://cdn3d.iconscout.com/3d/premium/thumb/coding-5306043-4460164.png?f=webp";
+                      }}
+                    />
+                    {/* Name Section */}
+                    <div
+                      style={{
+                        flex: 1,
+                        fontSize: "16px",
+                        fontWeight: "500",
+                        color: selectedCourses.includes(course.name)
+                          ? "#fff"
+                          : "black",
+                      }}
+                    >
+                      {course.name}
+                    </div>
+                  </div>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+          <Button
+            type="primary"
+            onClick={handleSubmitCourse}
+            style={{ marginTop: "16px" }}
+          >
+            Submit
+          </Button>
+        </div>
+      </Drawer>
+
       <div style={{ marginTop: 20 }}>
         Already have an account? <a href="/">Log in</a>
+      </div>
+
+      <br />
+
+      <footer className="footer">
+        <div className="links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms and Conditions</a>
+        </div>
+      </footer>
+      <br />
+      <div className="copyright">
+        © 2024 by <a href="https://mdfaizan973.github.io/">Md Faizan</a>
       </div>
     </div>
   );
